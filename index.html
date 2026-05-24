@@ -34,7 +34,7 @@
   #loadingScreen { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; z-index: 99999; flex-direction: column; gap: 15px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Мобильная адаптация */
+  /* Мобильная адаптация - чтобы нормально выглядело на телефоне */
   @media (max-width: 640px) {
     .navbar { padding: 10px 14px; }
     .logo { font-size: 17px; }
@@ -195,7 +195,7 @@
 <div class="page" id="page-about">
   <div style="max-width:860px; margin:0 auto; padding:30px 16px;">
     <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:8px;">О SportBooking.kz</h1>
-    <p style="color:#555; line-height:1.7; margin-bottom:24px; font-size:15px;">SportBooking.kz — это современная платформа для бронирования спортивных площадок в Казахстане. Мы создали этот сервис, чтобы каждый мог легко и быстро найти подходящее место для тренировки, игры или отдыха — без звонков, очередей и бумажных записей.</p>
+    <p style="color:#555; line-height:1.7; margin-bottom:24px; font-size:15px;">SportBooking.kz — это современная платформа для бронирования спортивных площадок в Семее. Мы создали этот сервис, чтобы каждый мог легко и быстро найти подходящее место для тренировки, игры или отдыха — без звонков, очередей и бумажных записей.</p>
 
     <!-- Статистика -->
     <div class="stats-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:28px;">
@@ -250,7 +250,7 @@
     <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
       <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:14px;">📍 Мы работаем в городах</h2>
       <div style="display:flex; flex-wrap:wrap; gap:10px;">
-        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Алматы</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Семей</span>
         <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Астана</span>
         <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Шымкент</span>
         <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Караганда</span>
@@ -281,7 +281,7 @@
         <div>📧 Email: <a href="mailto:info@sportbooking.kz" style="color:#003399;">info@sportbooking.kz</a></div>
         <div>📱 Телефон: +7 (727) 000-00-00</div>
         <div>🕐 Поддержка: Пн–Вс, 9:00–21:00</div>
-        <div>📍 Офис: г. Алматы, пр. Аль-Фараби, 17</div>
+        <div>📍 Офис: г. Семей, ул. Абая, 45</div>
       </div>
     </div>
   </div>
@@ -348,18 +348,26 @@
 </script>
 
 <script>
+// Список всех площадок которые есть на сайте
+// Я сам добавил эти данные вручную
 var venues = [
-  { id:1, name:"Arena Sports Center", address:"пр. Аль-Фараби, 17, Алматы", sport:"basketball", sportLabel:"Баскетбол, Волейбол", price:15000, rating:4.8, status:"Свободно", desc:"Современный зал с паркетом премиум-класса и LED-освещением.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuDRFSX_QCvpx9VhnCA7Xtkr3qTnSUZSG7kE5SRZ89t5ARhluQ0f-uqLncws3jmrpepr3DZFN8uRlzVLs1iusg2QLGGPVX4CzeacviC_w-l4fEwps3FDTdBYAjUGUR5XjytY3FHQ2Mac7d8uQeGTB17w-2gB3_0n_VzSLh8WOk7tXxa03pcQ2OOFMjEULwp61Hr2IUc7rel-uE3nHKNw3mNPhn58p01nMq9CM0NFGuetcldlPGtFvXVyVQxwYYJfdL4_Pp4tZiQTjRze", slots:["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"], busySlots:["10:00","11:00"], amenities:["Душевые","Раздевалки","Парковка","Инвентарь"], reviews:[{name:"Алексей И.",stars:5,text:"Отличный зал, покрытие супер!"},{name:"Мария С.",stars:4,text:"Всё хорошо, только парковка маленькая."}] },
-  { id:2, name:"City Football Pitch", address:"ул. Тимирязева, 28В, Алматы", sport:"football", sportLabel:"Футбол", price:20000, rating:4.5, status:"Занято до 18:00", desc:"Открытое поле с искусственным газоном. Яркое освещение.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBxuefGjkSSuLE-t8H3PgvZ5MDE9pX6yDaqiGyqky8rInUx1lTyKpDIof_aLfzvA7rAbCHKYnQmVVIu3eT4_dToP1JCOr0F1d2SXiVXmchxmlC7QzMEJrCEkXepKUxnM7R-X0XWLmdDS4c7DfrlEEDWR--m6S_7Bx0aX7UAH900DRovr3rmKBfHLLIN3KVjqwO0bRJGjEZh8AY8JMRYrRFTtT027MN9wqoor8A7d5m8uxQa6CC3MQTieRksZ2JPmNKO2g835c4sykLF", slots:["09:00","10:00","11:00","12:00","13:00","14:00","18:00","19:00","20:00","21:00"], busySlots:["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"], amenities:["Душевые","Раздевалки","Парковка","Трибуны"], reviews:[{name:"Дмитрий К.",stars:5,text:"Поле в отличном состоянии!"},{name:"Санжар Б.",stars:4,text:"Освещение вечером отличное."}] },
-  { id:3, name:"Olympic Tennis Club", address:"ул. Панфилова, 98, Алматы", sport:"tennis", sportLabel:"Теннис", price:12000, rating:4.9, status:"Свободно", desc:"Крытые и открытые корты с покрытием хард и грунт.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBv49aCKFM37303jYClcw_0hV-qKugp2YRUk8zIqIFmP2gQuV6kN3idjTbM-J67ITmuCcW9K-iiB4JQS64fd0ODyT6JFMo_GUUJqAY8ky0so8K3bHEGWIXnOXHO_PCvNjYRaZdbuQGpPq5Nb5kCSFHmjXpQG-10BuehkQp7ze6fWo2rsDYZqyUXaNNiL2sCQ9smhTEPp_duL3NDqHJR7MVxA3rdyhwZp2R0f-sfljDIcEUsvxlKwP9ao68ZMMu0cORbdJkriq8I4ThZ", slots:["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"], busySlots:["08:00","09:00"], amenities:["Душевые","Раздевалки","Кафе","Ракетки"], reviews:[{name:"Айгерим Н.",stars:5,text:"Лучшие корты в городе!"}] },
-  { id:4, name:"Yoga Studio", address:"мкр Самал-2, 58, Алматы", sport:"yoga", sportLabel:"Йога, Фитнес", price:8000, rating:4.7, status:"Свободно", desc:"Просторный зал для йоги и фитнеса. Маты в аренду.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuANuZDNbfKHns7TijXPG7SHvv6Vm_a_IxpxPj-_yXIAE2RMujK0CH2u6kuEG9MNKIaKCLvGh_YA0_UZDQEkChV5z-M_E1-US9rTGta1s4PcFKSIgaa57BufOt-TSKQl0IgOFGCe1ga-WC3QJmXvjvav_yqIILkm3VhuJyZ9vMoykIV9jQtzY4k54rI8wQ73812PL4DhGwBXyiRB8u1VRjTkPmkWhaU91l4whvp_k2uV00rUwHJcM-b8uQUPaBPQne2xpfybt1e9PtN2", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Маты","Медитация"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
+  { id:1, name:"Arena Sports Center", address:"ул. Абая, 45, Семей", sport:"basketball", sportLabel:"Баскетбол, Волейбол", price:15000, rating:4.8, status:"Свободно", desc:"Современный зал с паркетом премиум-класса и LED-освещением.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuDRFSX_QCvpx9VhnCA7Xtkr3qTnSUZSG7kE5SRZ89t5ARhluQ0f-uqLncws3jmrpepr3DZFN8uRlzVLs1iusg2QLGGPVX4CzeacviC_w-l4fEwps3FDTdBYAjUGUR5XjytY3FHQ2Mac7d8uQeGTB17w-2gB3_0n_VzSLh8WOk7tXxa03pcQ2OOFMjEULwp61Hr2IUc7rel-uE3nHKNw3mNPhn58p01nMq9CM0NFGuetcldlPGtFvXVyVQxwYYJfdL4_Pp4tZiQTjRze", slots:["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"], busySlots:["10:00","11:00"], amenities:["Душевые","Раздевалки","Парковка","Инвентарь"], reviews:[{name:"Алексей И.",stars:5,text:"Отличный зал, покрытие супер!"},{name:"Мария С.",stars:4,text:"Всё хорошо, только парковка маленькая."}] },
+  { id:2, name:"City Football Pitch", address:"пр. Шакарима, 112, Семей", sport:"football", sportLabel:"Футбол", price:20000, rating:4.5, status:"Занято до 18:00", desc:"Открытое поле с искусственным газоном. Яркое освещение.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBxuefGjkSSuLE-t8H3PgvZ5MDE9pX6yDaqiGyqky8rInUx1lTyKpDIof_aLfzvA7rAbCHKYnQmVVIu3eT4_dToP1JCOr0F1d2SXiVXmchxmlC7QzMEJrCEkXepKUxnM7R-X0XWLmdDS4c7DfrlEEDWR--m6S_7Bx0aX7UAH900DRovr3rmKBfHLLIN3KVjqwO0bRJGjEZh8AY8JMRYrRFTtT027MN9wqoor8A7d5m8uxQa6CC3MQTieRksZ2JPmNKO2g835c4sykLF", slots:["09:00","10:00","11:00","12:00","13:00","14:00","18:00","19:00","20:00","21:00"], busySlots:["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"], amenities:["Душевые","Раздевалки","Парковка","Трибуны"], reviews:[{name:"Дмитрий К.",stars:5,text:"Поле в отличном состоянии!"},{name:"Санжар Б.",stars:4,text:"Освещение вечером отличное."}] },
+  { id:3, name:"Olympic Tennis Club", address:"ул. Дулатова, 38, Семей", sport:"tennis", sportLabel:"Теннис", price:12000, rating:4.9, status:"Свободно", desc:"Крытые и открытые корты с покрытием хард и грунт.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBv49aCKFM37303jYClcw_0hV-qKugp2YRUk8zIqIFmP2gQuV6kN3idjTbM-J67ITmuCcW9K-iiB4JQS64fd0ODyT6JFMo_GUUJqAY8ky0so8K3bHEGWIXnOXHO_PCvNjYRaZdbuQGpPq5Nb5kCSFHmjXpQG-10BuehkQp7ze6fWo2rsDYZqyUXaNNiL2sCQ9smhTEPp_duL3NDqHJR7MVxA3rdyhwZp2R0f-sfljDIcEUsvxlKwP9ao68ZMMu0cORbdJkriq8I4ThZ", slots:["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"], busySlots:["08:00","09:00"], amenities:["Душевые","Раздевалки","Кафе","Ракетки"], reviews:[{name:"Айгерим Н.",stars:5,text:"Лучшие корты в городе!"}] },
+  { id:4, name:"Yoga Studio", address:"мкр Береговой, 22, Семей", sport:"yoga", sportLabel:"Йога, Фитнес", price:8000, rating:4.7, status:"Свободно", desc:"Просторный зал для йоги и фитнеса. Маты в аренду.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuANuZDNbfKHns7TijXPG7SHvv6Vm_a_IxpxPj-_yXIAE2RMujK0CH2u6kuEG9MNKIaKCLvGh_YA0_UZDQEkChV5z-M_E1-US9rTGta1s4PcFKSIgaa57BufOt-TSKQl0IgOFGCe1ga-WC3QJmXvjvav_yqIILkm3VhuJyZ9vMoykIV9jQtzY4k54rI8wQ73812PL4DhGwBXyiRB8u1VRjTkPmkWhaU91l4whvp_k2uV00rUwHJcM-b8uQUPaBPQne2xpfybt1e9PtN2", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Маты","Медитация"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
 ];
 
+// Текущий пользователь (null если не вошел в систему)
 var currentUser = null;
+// Выбранная площадка
 var selectedVenue = null;
+// Выбранное время
 var selectedSlot = null;
+// Данные для оформления брони
 var bookingData = null;
 
+// Функция для переключения страниц
+// Я сделал один html файл и просто скрываю/показываю нужные блоки
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -368,10 +376,12 @@ function showPage(name) {
   if (name == 'profile') renderProfile();
   if (name == 'venue' && selectedVenue) renderVenuePage();
   if (name == 'checkout' && bookingData) renderCheckout();
-  if (name == 'home') renderCards(venues);
+  if (name == 'home') // Запускаю сайт - показываю все карточки
+renderCards(venues);
   window.scrollTo(0, 0);
 }
 
+// Обновляю шапку сайта - если пользователь вошел показываю его имя
 function updateNavbar() {
   var cu = window.currentUser || currentUser;
   var area = document.getElementById('nav-user-area');
@@ -384,6 +394,7 @@ function updateNavbar() {
   }
 }
 
+// Рисую карточки площадок на главной странице
 function renderCards(list) {
   var container = document.getElementById('cardsContainer');
   var noRes = document.getElementById('noResults');
@@ -406,6 +417,7 @@ function renderCards(list) {
   container.innerHTML = html;
 }
 
+// Фильтрация площадок по поиску, виду спорта и цене
 function doFilter() {
   var text = document.getElementById('searchText').value.toLowerCase();
   var sport = document.getElementById('filterSport').value;
@@ -422,12 +434,14 @@ function doFilter() {
   renderCards(filtered);
 }
 
+// Открываю страницу конкретной площадки
 function openVenue(id) {
   selectedVenue = venues.find(v => v.id == id);
   selectedSlot = null;
   showPage('venue');
 }
 
+// Заполняю страницу площадки данными
 function renderVenuePage() {
   var v = selectedVenue;
   var isMobile = window.innerWidth <= 640;
@@ -475,6 +489,7 @@ function renderVenuePage() {
   document.getElementById('venueContent').innerHTML = html;
 }
 
+// Выбор времени - подсвечиваю нажатый слот синим
 function pickSlot(slot) {
   document.querySelectorAll('.slot:not(.busy)').forEach(s => s.classList.remove('selected'));
   var el = document.getElementById('slot-' + slot.replace(':',''));
@@ -482,6 +497,7 @@ function pickSlot(slot) {
   selectedSlot = slot;
 }
 
+// Проверяю все ли выбрано и перехожу к оплате
 function goCheckout() {
   var cu = window.currentUser || currentUser;
   if (!cu) { showAlert('Войдите чтобы забронировать!'); showPage('login'); return; }
@@ -491,6 +507,7 @@ function goCheckout() {
   showPage('checkout');
 }
 
+// Рисую страницу оформления заказа
 function renderCheckout() {
   var v = bookingData.venue;
   var slot = bookingData.slot;
@@ -541,6 +558,7 @@ function renderCheckout() {
   document.getElementById('checkoutContent').style.display = 'grid';
 }
 
+// Проверка промокода - у меня пока только один рабочий промокод SPORT10
 function applyPromo() {
   var code = document.getElementById('promoCode').value.toUpperCase().trim();
   var msg = document.getElementById('promoMsg');
@@ -554,6 +572,7 @@ function applyPromo() {
   }
 }
 
+// Оплата - сохраняю бронь в Firebase и показываю билет
 async function confirmPay() {
   var btn = document.getElementById('payBtn');
   btn.textContent = '⏳ Обрабатываем...';
@@ -591,6 +610,7 @@ async function confirmPay() {
   }
 }
 
+// Вход в аккаунт через Firebase Authentication
 async function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
@@ -603,6 +623,7 @@ async function doLogin() {
   } catch(e) { err.style.display = 'block'; }
 }
 
+// Регистрация нового пользователя
 async function doRegister() {
   var name = document.getElementById('regName').value.trim();
   var email = document.getElementById('regEmail').value.trim();
@@ -620,6 +641,7 @@ async function doRegister() {
   } catch(e) { err.textContent = e.message; err.style.display = 'block'; }
 }
 
+// Выход из аккаунта
 async function doLogout() {
   await window.firebaseFuncs.signOut(window.firebaseAuth);
   window.currentUser = null;
@@ -628,6 +650,7 @@ async function doLogout() {
   showAlert('Вы вышли из аккаунта');
 }
 
+// Переключение между вкладками Войти и Регистрация
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab == 'login' ? 'block' : 'none';
   document.getElementById('formReg').style.display = tab == 'reg' ? 'block' : 'none';
@@ -637,6 +660,7 @@ function switchTab(tab) {
   document.getElementById('tabReg').style.color = tab == 'reg' ? 'white' : '#666';
 }
 
+// Загружаю историю броней пользователя из Firebase
 async function renderProfile() {
   var cu = window.currentUser;
   if (!cu) { showPage('login'); return; }
@@ -679,6 +703,7 @@ async function renderProfile() {
   el.innerHTML = html;
 }
 
+// Отмена брони - меняю статус в базе данных
 async function cancelBooking(docId) {
   try {
     await window.firebaseFuncs.updateDoc(window.firebaseFuncs.doc(window.firebaseDb, 'bookings', docId), { status: 'cancelled' });
@@ -687,6 +712,7 @@ async function cancelBooking(docId) {
   } catch(e) { showAlert('Ошибка: ' + e.message); }
 }
 
+// Показываю уведомление внизу экрана на 3 секунды
 function showAlert(msg) {
   var el = document.getElementById('myAlert');
   el.textContent = msg;
@@ -694,6 +720,7 @@ function showAlert(msg) {
   setTimeout(() => el.style.display = 'none', 3000);
 }
 
+// Запускаю сайт - показываю все карточки
 renderCards(venues);
 </script>
 </body>
