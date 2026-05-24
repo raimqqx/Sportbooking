@@ -1,26 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>SportBooking.kz</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
 <html>
 <head>
 <title>SportBooking.kz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   body { font-family: 'Roboto', sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; }
-  .navbar { background-color: #003399; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-  .navbar a { color: white; text-decoration: none; margin-left: 15px; font-size: 15px; }
+  .navbar { background-color: #003399; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .navbar-links { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .navbar a { color: white; text-decoration: none; font-size: 13px; }
   .navbar a:hover { text-decoration: underline; }
-  .logo { color: white; font-size: 22px; font-weight: bold; cursor: pointer; }
+  .logo { color: white; font-size: 20px; font-weight: bold; cursor: pointer; }
   .card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
   .card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
@@ -39,44 +30,59 @@
   input:focus, select:focus { outline: none; border-color: #003399; }
   label { font-size: 14px; font-weight: 600; color: #333; }
   .footer { background: #222; color: #aaa; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
-  #myAlert { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; display: none; z-index: 9999; }
+  #myAlert { position: fixed; bottom: 20px; right: 20px; left: 20px; background: #333; color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; display: none; z-index: 9999; text-align: center; }
   #loadingScreen { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; z-index: 99999; flex-direction: column; gap: 15px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Мобильная адаптация */
+  @media (max-width: 640px) {
+    .navbar { padding: 10px 14px; }
+    .logo { font-size: 17px; }
+    .navbar a { font-size: 12px; }
+    .navbar a[style*="background:white"] { padding: 5px 10px !important; font-size: 12px !important; }
+    .cards-grid { grid-template-columns: 1fr !important; }
+    .venue-grid { grid-template-columns: 1fr !important; }
+    .checkout-grid { grid-template-columns: 1fr !important; }
+    .filters-row { flex-direction: column !important; }
+    .filters-row select, .filters-row input { width: 100% !important; min-width: unset !important; }
+    .stats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .about-team-grid { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
- 
+
 <!-- загрузка -->
 <div id="loadingScreen">
   <div style="font-size:28px; font-weight:bold; color:#003399;">SportBooking.kz</div>
   <div style="color:#666; font-size:14px;">Подключаемся к базе данных...</div>
   <div style="width:40px; height:40px; border:4px solid #eee; border-top-color:#003399; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
 </div>
-<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
- 
+
 <div id="myAlert">сообщение</div>
- 
+
 <!-- НАВБАР -->
 <div class="navbar" id="navbar">
   <span class="logo" onclick="showPage('home')">SportBooking.kz</span>
-  <div>
+  <div class="navbar-links">
     <a href="#" onclick="showPage('home')">Главная</a>
     <a href="#" onclick="showPage('about')">О нас</a>
     <a href="#" onclick="showPage('support')">Поддержка</a>
     <span id="nav-user-area">
-      <a href="#" onclick="showPage('login')" style="margin-left:15px">Войти</a>
-      <a href="#" onclick="showPage('login')" style="margin-left:10px; background:white; color:#003399; padding:6px 14px; border-radius:8px; font-weight:bold;">Регистрация</a>
+      <a href="#" onclick="showPage('login')" style="margin-left:8px">Войти</a>
+      <a href="#" onclick="showPage('login')" style="margin-left:6px; background:white; color:#003399; padding:6px 12px; border-radius:8px; font-weight:bold;">Регистрация</a>
     </span>
   </div>
 </div>
- 
+
 <!-- ГЛАВНАЯ -->
 <div class="page active" id="page-home">
-  <div style="max-width:1100px; margin:0 auto; padding:30px 20px;">
-    <div style="background:white; border-radius:12px; padding:25px; margin-bottom:25px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-      <h1 style="font-size:26px; font-weight:bold; margin-bottom:15px; color:#003399;">Найти спортивную площадку</h1>
-      <input type="text" id="searchText" placeholder="Поиск по названию..." onkeyup="doFilter()" style="margin-bottom:12px;">
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-        <select id="filterSport" onchange="doFilter()" style="width:auto; flex:1; min-width:150px;">
+  <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
+    <div style="background:white; border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <h1 style="font-size:22px; font-weight:bold; margin-bottom:12px; color:#003399;">Найти спортивную площадку</h1>
+      <input type="text" id="searchText" placeholder="Поиск по названию..." onkeyup="doFilter()" style="margin-bottom:10px;">
+      <div class="filters-row" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+        <select id="filterSport" onchange="doFilter()" style="width:auto; flex:1; min-width:140px;">
           <option value="">Все виды спорта</option>
           <option value="football">Футбол</option>
           <option value="basketball">Баскетбол</option>
@@ -84,47 +90,47 @@
           <option value="volleyball">Волейбол</option>
           <option value="yoga">Йога</option>
         </select>
-        <select id="filterPrice" onchange="doFilter()" style="width:auto; flex:1; min-width:150px;">
+        <select id="filterPrice" onchange="doFilter()" style="width:auto; flex:1; min-width:140px;">
           <option value="">Любая цена</option>
           <option value="cheap">До 5000 ₸</option>
           <option value="medium">5000-15000 ₸</option>
           <option value="expensive">Дороже 15000 ₸</option>
         </select>
-        <input type="date" id="filterDate" onchange="doFilter()" style="width:auto; flex:1; min-width:150px;">
+        <input type="date" id="filterDate" onchange="doFilter()" style="width:auto; flex:1; min-width:140px;">
       </div>
       <button class="btn" onclick="doFilter()">Найти</button>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px;" id="cardsContainer"></div>
+    <div class="cards-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px;" id="cardsContainer"></div>
     <p id="noResults" style="display:none; text-align:center; color:#999; padding:40px; font-size:16px;">Ничего не найдено 😕</p>
   </div>
-  <div class="footer">© 2024 SportBooking.kz — все права защищены</div>
+  <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
- 
+
 <!-- ПЛОЩАДКА -->
 <div class="page" id="page-venue">
-  <div style="max-width:1100px; margin:0 auto; padding:30px 20px;">
-    <button class="btn" onclick="showPage('home')" style="margin-bottom:20px;">← Назад</button>
-    <div style="display:grid; grid-template-columns:1fr 350px; gap:25px;" id="venueContent"></div>
+  <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
+    <button class="btn" onclick="showPage('home')" style="margin-bottom:16px;">← Назад</button>
+    <div class="venue-grid" style="display:grid; grid-template-columns:1fr 350px; gap:20px;" id="venueContent"></div>
   </div>
-  <div class="footer">© 2024 SportBooking.kz</div>
+  <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <!-- ЧЕКАУТ -->
 <div class="page" id="page-checkout">
-  <div style="background:#003399; padding:15px 25px; display:flex; align-items:center; gap:10px;">
+  <div style="background:#003399; padding:12px 20px; display:flex; align-items:center; gap:10px;">
     <button onclick="showPage('venue')" style="background:none; border:none; color:white; cursor:pointer; font-size:18px;">←</button>
-    <span style="color:white; font-weight:bold; font-size:18px;">SportBooking.kz</span>
-    <span style="color:rgba(255,255,255,0.7); margin-left:auto; font-size:13px;">🔒 Безопасная оплата</span>
+    <span style="color:white; font-weight:bold; font-size:17px;">SportBooking.kz</span>
+    <span style="color:rgba(255,255,255,0.7); margin-left:auto; font-size:12px;">🔒 Безопасная оплата</span>
   </div>
-  <div style="max-width:900px; margin:0 auto; padding:30px 20px;">
-    <h1 style="font-size:24px; font-weight:bold; color:#003399; margin-bottom:5px;">Оформление бронирования</h1>
-    <p style="color:#666; margin-bottom:25px;">Проверьте данные и оплатите</p>
-    <div id="checkoutContent" style="display:grid; grid-template-columns:1fr 340px; gap:25px;"></div>
-    <div id="successScreen" style="display:none; text-align:center; padding:50px 20px;">
+  <div style="max-width:900px; margin:0 auto; padding:20px 14px;">
+    <h1 style="font-size:22px; font-weight:bold; color:#003399; margin-bottom:5px;">Оформление бронирования</h1>
+    <p style="color:#666; margin-bottom:20px;">Проверьте данные и оплатите</p>
+    <div id="checkoutContent" class="checkout-grid" style="display:grid; grid-template-columns:1fr 340px; gap:20px;"></div>
+    <div id="successScreen" style="display:none; text-align:center; padding:40px 16px;">
       <div style="width:80px; height:80px; background:#3fff8b; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:40px;">✓</div>
-      <h2 style="font-size:26px; color:#003399; margin-bottom:10px;">Готово! Бронирование подтверждено</h2>
-      <p style="color:#666; margin-bottom:30px;">Чек отправлен на вашу почту</p>
-      <div style="max-width:320px; margin:0 auto 30px; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+      <h2 style="font-size:24px; color:#003399; margin-bottom:10px;">Готово! Бронирование подтверждено</h2>
+      <p style="color:#666; margin-bottom:25px;">Чек отправлен на вашу почту</p>
+      <div style="max-width:320px; margin:0 auto 25px; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
         <div style="background:#003399; color:white; padding:20px; text-align:left;">
           <div style="font-size:12px; background:rgba(255,255,255,0.2); display:inline-block; padding:3px 10px; border-radius:5px; margin-bottom:10px;" id="ticketNum">Заказ #SB-1234</div>
           <div style="font-size:18px; font-weight:bold;" id="ticketVenue">Арена</div>
@@ -141,89 +147,172 @@
           </div>
         </div>
       </div>
-      <button class="btn" onclick="showPage('home')" style="margin-right:10px;">На главную</button>
+      <button class="btn" onclick="showPage('home')" style="margin-right:10px; margin-bottom:10px;">На главную</button>
       <button class="btn" onclick="showPage('profile')">Мои бронирования</button>
     </div>
   </div>
 </div>
- 
+
 <!-- ЛОГИН -->
 <div class="page" id="page-login">
-  <div style="max-width:420px; margin:60px auto; padding:0 20px;">
-    <div style="text-align:center; margin-bottom:25px;">
-      <span style="font-size:24px; font-weight:bold; color:#003399; cursor:pointer;" onclick="showPage('home')">SportBooking.kz</span>
+  <div style="max-width:420px; margin:40px auto; padding:0 16px;">
+    <div style="text-align:center; margin-bottom:20px;">
+      <span style="font-size:22px; font-weight:bold; color:#003399; cursor:pointer;" onclick="showPage('home')">SportBooking.kz</span>
       <p style="color:#666; margin-top:5px;">Войдите или создайте аккаунт</p>
     </div>
-    <div style="background:white; border-radius:12px; padding:25px; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
-      <div style="display:flex; border:1px solid #ddd; border-radius:8px; overflow:hidden; margin-bottom:20px;">
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+      <div style="display:flex; border:1px solid #ddd; border-radius:8px; overflow:hidden; margin-bottom:18px;">
         <button id="tabLogin" onclick="switchTab('login')" style="flex:1; padding:10px; border:none; background:#003399; color:white; font-weight:600; cursor:pointer; font-size:14px;">Войти</button>
         <button id="tabReg" onclick="switchTab('reg')" style="flex:1; padding:10px; border:none; background:white; color:#666; cursor:pointer; font-size:14px;">Регистрация</button>
       </div>
       <div id="formLogin">
-        <div style="margin-bottom:15px;"><label>Email</label><input type="email" id="loginEmail" placeholder="example@mail.ru"></div>
-        <div style="margin-bottom:15px;"><label>Пароль</label><input type="password" id="loginPass" placeholder="введите пароль"></div>
+        <div style="margin-bottom:14px;"><label>Email</label><input type="email" id="loginEmail" placeholder="example@mail.ru"></div>
+        <div style="margin-bottom:14px;"><label>Пароль</label><input type="password" id="loginPass" placeholder="введите пароль"></div>
         <p class="error-msg" id="loginErr" style="display:none;">Неверный логин или пароль</p>
         <button class="btn" onclick="doLogin()" style="width:100%; margin-top:5px;">Войти</button>
       </div>
       <div id="formReg" style="display:none;">
-        <div style="margin-bottom:15px;"><label>Имя</label><input type="text" id="regName" placeholder="Ваше имя"></div>
-        <div style="margin-bottom:15px;"><label>Email</label><input type="email" id="regEmail" placeholder="example@mail.ru"></div>
-        <div style="margin-bottom:15px;"><label>Пароль</label><input type="password" id="regPass" placeholder="минимум 6 символов"></div>
+        <div style="margin-bottom:14px;"><label>Имя</label><input type="text" id="regName" placeholder="Ваше имя"></div>
+        <div style="margin-bottom:14px;"><label>Email</label><input type="email" id="regEmail" placeholder="example@mail.ru"></div>
+        <div style="margin-bottom:14px;"><label>Пароль</label><input type="password" id="regPass" placeholder="минимум 6 символов"></div>
         <p class="error-msg" id="regErr" style="display:none;">Ошибка</p>
         <button class="btn" onclick="doRegister()" style="width:100%; margin-top:5px;">Создать аккаунт</button>
       </div>
     </div>
   </div>
 </div>
- 
+
 <!-- ПРОФИЛЬ -->
 <div class="page" id="page-profile">
-  <div style="max-width:700px; margin:0 auto; padding:30px 20px;">
-    <h1 style="font-size:24px; font-weight:bold; color:#003399; margin-bottom:20px;">Мой профиль</h1>
+  <div style="max-width:700px; margin:0 auto; padding:20px 14px;">
+    <h1 style="font-size:22px; font-weight:bold; color:#003399; margin-bottom:18px;">Мой профиль</h1>
     <div id="profileContent"></div>
   </div>
-  <div class="footer">© 2024 SportBooking.kz</div>
+  <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <!-- О НАС -->
 <div class="page" id="page-about">
-  <div style="max-width:800px; margin:0 auto; padding:40px 20px;">
-    <h1 style="font-size:28px; font-weight:bold; color:#003399; margin-bottom:15px;">О SportBooking.kz</h1>
-    <p style="color:#555; line-height:1.7; margin-bottom:20px;">Мы сделали этот сайт чтобы было удобно бронировать спортивные площадки в Казахстане.</p>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:30px;">
-      <div style="background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:32px; font-weight:bold; color:#003399;">200+</div><div style="color:#666; font-size:13px;">площадок</div></div>
-      <div style="background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:32px; font-weight:bold; color:#003399;">50k+</div><div style="color:#666; font-size:13px;">пользователей</div></div>
-      <div style="background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:32px; font-weight:bold; color:#003399;">10+</div><div style="color:#666; font-size:13px;">городов</div></div>
+  <div style="max-width:860px; margin:0 auto; padding:30px 16px;">
+    <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:8px;">О SportBooking.kz</h1>
+    <p style="color:#555; line-height:1.7; margin-bottom:24px; font-size:15px;">SportBooking.kz — это современная платформа для бронирования спортивных площадок в Казахстане. Мы создали этот сервис, чтобы каждый мог легко и быстро найти подходящее место для тренировки, игры или отдыха — без звонков, очередей и бумажных записей.</p>
+
+    <!-- Статистика -->
+    <div class="stats-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:28px;">
+      <div style="background:white; border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:28px; font-weight:bold; color:#003399;">200+</div><div style="color:#666; font-size:13px;">площадок</div></div>
+      <div style="background:white; border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:28px; font-weight:bold; color:#003399;">50k+</div><div style="color:#666; font-size:13px;">пользователей</div></div>
+      <div style="background:white; border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:28px; font-weight:bold; color:#003399;">10+</div><div style="color:#666; font-size:13px;">городов</div></div>
+    </div>
+
+    <!-- Наша миссия -->
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
+      <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:10px;">🎯 Наша миссия</h2>
+      <p style="color:#555; line-height:1.7; font-size:14px;">Мы верим, что спорт должен быть доступен каждому. Наша цель — убрать все барьеры между человеком и спортом: сложный поиск, непрозрачные цены, неудобное бронирование. SportBooking.kz делает этот процесс простым, быстрым и приятным.</p>
+    </div>
+
+    <!-- Как мы работаем -->
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
+      <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:16px;">⚙️ Как это работает</h2>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:36px; height:36px; background:#003399; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">1</div>
+          <div><div style="font-weight:600; margin-bottom:3px;">Выберите площадку</div><div style="color:#666; font-size:13px;">Используйте фильтры по виду спорта, цене и дате. Смотрите фото, отзывы и удобства.</div></div>
+        </div>
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:36px; height:36px; background:#003399; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">2</div>
+          <div><div style="font-weight:600; margin-bottom:3px;">Выберите время</div><div style="color:#666; font-size:13px;">Доступные слоты показываются в реальном времени. Занятые часы автоматически недоступны.</div></div>
+        </div>
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:36px; height:36px; background:#003399; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">3</div>
+          <div><div style="font-weight:600; margin-bottom:3px;">Оплатите онлайн</div><div style="color:#666; font-size:13px;">Принимаем Kaspi Pay, Visa, Mastercard и QR-коды. Оплата безопасна и зашифрована.</div></div>
+        </div>
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:36px; height:36px; background:#006d35; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0;">✓</div>
+          <div><div style="font-weight:600; margin-bottom:3px;">Получите QR-билет</div><div style="color:#666; font-size:13px;">Билет придёт на почту и сохранится в профиле. Просто покажите QR на входе.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Виды спорта -->
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
+      <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:14px;">🏆 Виды спорта</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">⚽ Футбол</span>
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">🏀 Баскетбол</span>
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">🎾 Теннис</span>
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">🏐 Волейбол</span>
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">🧘 Йога</span>
+        <span style="background:#f0f4ff; color:#003399; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;">💪 Фитнес</span>
+      </div>
+    </div>
+
+    <!-- Города -->
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
+      <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:14px;">📍 Мы работаем в городах</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Алматы</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Астана</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Шымкент</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Караганда</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Актобе</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Атырау</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Павлодар</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Усть-Каменогорск</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Семей</span>
+        <span style="background:#eee; padding:8px 16px; border-radius:20px; font-size:13px;">Тараз</span>
+      </div>
+    </div>
+
+    <!-- Преимущества -->
+    <div style="background:#003399; border-radius:12px; padding:22px; margin-bottom:20px; color:white;">
+      <h2 style="font-size:18px; font-weight:bold; margin-bottom:16px;">✨ Почему выбирают нас</h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;"><span style="font-size:20px;">⚡</span><div><div style="font-weight:600; margin-bottom:2px;">Мгновенное бронирование</div><div style="opacity:0.8; font-size:13px;">Никаких звонков и ожиданий — бронируйте за 2 минуты</div></div></div>
+        <div style="display:flex; gap:12px; align-items:flex-start;"><span style="font-size:20px;">💰</span><div><div style="font-weight:600; margin-bottom:2px;">Прозрачные цены</div><div style="opacity:0.8; font-size:13px;">Никаких скрытых комиссий — цена видна заранее</div></div></div>
+        <div style="display:flex; gap:12px; align-items:flex-start;"><span style="font-size:20px;">🔄</span><div><div style="font-weight:600; margin-bottom:2px;">Бесплатная отмена</div><div style="opacity:0.8; font-size:13px;">Отменить бронь можно за 24 часа без штрафов</div></div></div>
+        <div style="display:flex; gap:12px; align-items:flex-start;"><span style="font-size:20px;">📱</span><div><div style="font-weight:600; margin-bottom:2px;">Удобно с телефона</div><div style="opacity:0.8; font-size:13px;">Сайт адаптирован для мобильных устройств</div></div></div>
+      </div>
+    </div>
+
+    <!-- Контакты -->
+    <div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <h2 style="font-size:18px; font-weight:bold; color:#003399; margin-bottom:14px;">📞 Контакты</h2>
+      <div style="display:flex; flex-direction:column; gap:10px; color:#555; font-size:14px;">
+        <div>📧 Email: <a href="mailto:info@sportbooking.kz" style="color:#003399;">info@sportbooking.kz</a></div>
+        <div>📱 Телефон: +7 (727) 000-00-00</div>
+        <div>🕐 Поддержка: Пн–Вс, 9:00–21:00</div>
+        <div>📍 Офис: г. Алматы, пр. Аль-Фараби, 17</div>
+      </div>
     </div>
   </div>
-  <div class="footer">© 2024 SportBooking.kz</div>
+  <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
- 
+
 <!-- ПОДДЕРЖКА -->
 <div class="page" id="page-support">
-  <div style="max-width:700px; margin:0 auto; padding:40px 20px;">
-    <h1 style="font-size:28px; font-weight:bold; color:#003399; margin-bottom:5px;">Поддержка</h1>
-    <p style="color:#666; margin-bottom:25px;">Отвечаем в течение 30 минут</p>
-    <div style="display:flex; flex-direction:column; gap:15px; margin-bottom:25px;">
-      <div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Как отменить бронь?</h3><p style="color:#666; font-size:14px;">Профиль → История → кнопка Отменить.</p></div>
-      <div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Какие способы оплаты?</h3><p style="color:#666; font-size:14px;">Kaspi Pay, Visa, Mastercard, QR.</p></div>
-      <div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Где мой билет?</h3><p style="color:#666; font-size:14px;">На почте и в разделе Профиль → История.</p></div>
+  <div style="max-width:700px; margin:0 auto; padding:30px 16px;">
+    <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:5px;">Поддержка</h1>
+    <p style="color:#666; margin-bottom:22px;">Отвечаем в течение 30 минут</p>
+    <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;">
+      <div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Как отменить бронь?</h3><p style="color:#666; font-size:14px;">Профиль → История → кнопка Отменить.</p></div>
+      <div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Какие способы оплаты?</h3><p style="color:#666; font-size:14px;">Kaspi Pay, Visa, Mastercard, QR.</p></div>
+      <div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><h3 style="font-weight:bold; margin-bottom:8px;">Где мой билет?</h3><p style="color:#666; font-size:14px;">На почте и в разделе Профиль → История.</p></div>
     </div>
-    <div style="background:#003399; color:white; border-radius:12px; padding:25px; text-align:center;">
+    <div style="background:#003399; color:white; border-radius:12px; padding:22px; text-align:center;">
       <p style="font-weight:bold; font-size:16px; margin-bottom:5px;">Не нашли ответ?</p>
       <button onclick="showAlert('Форма обратной связи скоро появится!')" style="background:white; color:#003399; border:none; padding:10px 25px; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px;">Написать</button>
     </div>
   </div>
-  <div class="footer">© 2024 SportBooking.kz</div>
+  <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <!-- FIREBASE SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
- 
+
   const firebaseConfig = {
     apiKey: "AIzaSyCRlGcg8AHUg0NuDIy9lpW_iRGmefo_a2U",
     authDomain: "sportbookingkz.firebaseapp.com",
@@ -234,31 +323,19 @@
     appId: "1:369503935275:web:cff529a9a1f2562f62c36e",
     measurementId: "G-Q46GXWSLME"
   };
- 
+
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const db = getFirestore(app);
- 
-  // делаю функции глобальными чтобы html мог их вызывать
+
   window.firebaseAuth = auth;
   window.firebaseDb = db;
   window.firebaseFuncs = {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    collection,
-    addDoc,
-    getDocs,
-    doc,
-    updateDoc,
-    query,
-    where,
-    orderBy,
-    updateProfile
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+    collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy, updateProfile
   };
- 
-  // слежу за состоянием авторизации
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       window.currentUser = { name: user.displayName || user.email.split('@')[0], email: user.email, uid: user.uid };
@@ -266,69 +343,23 @@
       window.currentUser = null;
     }
     updateNavbar();
-    // убираю экран загрузки
     document.getElementById('loadingScreen').style.display = 'none';
   });
 </script>
- 
+
 <script>
-// данные площадок (цены в тенге)
 var venues = [
-  {
-    id: 1, name: "Arena Sports Center",
-    address: "пр. Аль-Фараби, 17, Алматы",
-    sport: "basketball", sportLabel: "Баскетбол, Волейбол",
-    price: 15000, rating: 4.8, status: "Свободно",
-    desc: "Современный зал с паркетом премиум-класса и LED-освещением.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDRFSX_QCvpx9VhnCA7Xtkr3qTnSUZSG7kE5SRZ89t5ARhluQ0f-uqLncws3jmrpepr3DZFN8uRlzVLs1iusg2QLGGPVX4CzeacviC_w-l4fEwps3FDTdBYAjUGUR5XjytY3FHQ2Mac7d8uQeGTB17w-2gB3_0n_VzSLh8WOk7tXxa03pcQ2OOFMjEULwp61Hr2IUc7rel-uE3nHKNw3mNPhn58p01nMq9CM0NFGuetcldlPGtFvXVyVQxwYYJfdL4_Pp4tZiQTjRze",
-    slots: ["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"],
-    busySlots: ["10:00","11:00"],
-    amenities: ["Душевые","Раздевалки","Парковка","Инвентарь"],
-    reviews: [{name:"Алексей И.", stars:5, text:"Отличный зал, покрытие супер!"},{name:"Мария С.", stars:4, text:"Всё хорошо, только парковка маленькая."}]
-  },
-  {
-    id: 2, name: "City Football Pitch",
-    address: "ул. Тимирязева, 28В, Алматы",
-    sport: "football", sportLabel: "Футбол",
-    price: 20000, rating: 4.5, status: "Занято до 18:00",
-    desc: "Открытое поле с искусственным газоном. Яркое освещение.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBxuefGjkSSuLE-t8H3PgvZ5MDE9pX6yDaqiGyqky8rInUx1lTyKpDIof_aLfzvA7rAbCHKYnQmVVIu3eT4_dToP1JCOr0F1d2SXiVXmchxmlC7QzMEJrCEkXepKUxnM7R-X0XWLmdDS4c7DfrlEEDWR--m6S_7Bx0aX7UAH900DRovr3rmKBfHLLIN3KVjqwO0bRJGjEZh8AY8JMRYrRFTtT027MN9wqoor8A7d5m8uxQa6CC3MQTieRksZ2JPmNKO2g835c4sykLF",
-    slots: ["09:00","10:00","11:00","12:00","13:00","14:00","18:00","19:00","20:00","21:00"],
-    busySlots: ["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"],
-    amenities: ["Душевые","Раздевалки","Парковка","Трибуны"],
-    reviews: [{name:"Дмитрий К.", stars:5, text:"Поле в отличном состоянии!"},{name:"Санжар Б.", stars:4, text:"Освещение вечером отличное."}]
-  },
-  {
-    id: 3, name: "Olympic Tennis Club",
-    address: "ул. Панфилова, 98, Алматы",
-    sport: "tennis", sportLabel: "Теннис",
-    price: 12000, rating: 4.9, status: "Свободно",
-    desc: "Крытые и открытые корты с покрытием хард и грунт.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBv49aCKFM37303jYClcw_0hV-qKugp2YRUk8zIqIFmP2gQuV6kN3idjTbM-J67ITmuCcW9K-iiB4JQS64fd0ODyT6JFMo_GUUJqAY8ky0so8K3bHEGWIXnOXHO_PCvNjYRaZdbuQGpPq5Nb5kCSFHmjXpQG-10BuehkQp7ze6fWo2rsDYZqyUXaNNiL2sCQ9smhTEPp_duL3NDqHJR7MVxA3rdyhwZp2R0f-sfljDIcEUsvxlKwP9ao68ZMMu0cORbdJkriq8I4ThZ",
-    slots: ["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"],
-    busySlots: ["08:00","09:00"],
-    amenities: ["Душевые","Раздевалки","Кафе","Ракетки"],
-    reviews: [{name:"Айгерим Н.", stars:5, text:"Лучшие корты в городе!"}]
-  },
-  {
-    id: 4, name: "Yoga Studio",
-    address: "мкр Самал-2, 58, Алматы",
-    sport: "yoga", sportLabel: "Йога, Фитнес",
-    price: 8000, rating: 4.7, status: "Свободно",
-    desc: "Просторный зал для йоги и фитнеса. Маты в аренду.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuANuZDNbfKHns7TijXPG7SHvv6Vm_a_IxpxPj-_yXIAE2RMujK0CH2u6kuEG9MNKIaKCLvGh_YA0_UZDQEkChV5z-M_E1-US9rTGta1s4PcFKSIgaa57BufOt-TSKQl0IgOFGCe1ga-WC3QJmXvjvav_yqIILkm3VhuJyZ9vMoykIV9jQtzY4k54rI8wQ73812PL4DhGwBXyiRB8u1VRjTkPmkWhaU91l4whvp_k2uV00rUwHJcM-b8uQUPaBPQne2xpfybt1e9PtN2",
-    slots: ["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"],
-    busySlots: ["07:00","08:00"],
-    amenities: ["Душевые","Раздевалки","Маты","Медитация"],
-    reviews: [{name:"Камила Д.", stars:5, text:"Очень уютный зал!"}]
-  }
+  { id:1, name:"Arena Sports Center", address:"пр. Аль-Фараби, 17, Алматы", sport:"basketball", sportLabel:"Баскетбол, Волейбол", price:15000, rating:4.8, status:"Свободно", desc:"Современный зал с паркетом премиум-класса и LED-освещением.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuDRFSX_QCvpx9VhnCA7Xtkr3qTnSUZSG7kE5SRZ89t5ARhluQ0f-uqLncws3jmrpepr3DZFN8uRlzVLs1iusg2QLGGPVX4CzeacviC_w-l4fEwps3FDTdBYAjUGUR5XjytY3FHQ2Mac7d8uQeGTB17w-2gB3_0n_VzSLh8WOk7tXxa03pcQ2OOFMjEULwp61Hr2IUc7rel-uE3nHKNw3mNPhn58p01nMq9CM0NFGuetcldlPGtFvXVyVQxwYYJfdL4_Pp4tZiQTjRze", slots:["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"], busySlots:["10:00","11:00"], amenities:["Душевые","Раздевалки","Парковка","Инвентарь"], reviews:[{name:"Алексей И.",stars:5,text:"Отличный зал, покрытие супер!"},{name:"Мария С.",stars:4,text:"Всё хорошо, только парковка маленькая."}] },
+  { id:2, name:"City Football Pitch", address:"ул. Тимирязева, 28В, Алматы", sport:"football", sportLabel:"Футбол", price:20000, rating:4.5, status:"Занято до 18:00", desc:"Открытое поле с искусственным газоном. Яркое освещение.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBxuefGjkSSuLE-t8H3PgvZ5MDE9pX6yDaqiGyqky8rInUx1lTyKpDIof_aLfzvA7rAbCHKYnQmVVIu3eT4_dToP1JCOr0F1d2SXiVXmchxmlC7QzMEJrCEkXepKUxnM7R-X0XWLmdDS4c7DfrlEEDWR--m6S_7Bx0aX7UAH900DRovr3rmKBfHLLIN3KVjqwO0bRJGjEZh8AY8JMRYrRFTtT027MN9wqoor8A7d5m8uxQa6CC3MQTieRksZ2JPmNKO2g835c4sykLF", slots:["09:00","10:00","11:00","12:00","13:00","14:00","18:00","19:00","20:00","21:00"], busySlots:["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"], amenities:["Душевые","Раздевалки","Парковка","Трибуны"], reviews:[{name:"Дмитрий К.",stars:5,text:"Поле в отличном состоянии!"},{name:"Санжар Б.",stars:4,text:"Освещение вечером отличное."}] },
+  { id:3, name:"Olympic Tennis Club", address:"ул. Панфилова, 98, Алматы", sport:"tennis", sportLabel:"Теннис", price:12000, rating:4.9, status:"Свободно", desc:"Крытые и открытые корты с покрытием хард и грунт.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBv49aCKFM37303jYClcw_0hV-qKugp2YRUk8zIqIFmP2gQuV6kN3idjTbM-J67ITmuCcW9K-iiB4JQS64fd0ODyT6JFMo_GUUJqAY8ky0so8K3bHEGWIXnOXHO_PCvNjYRaZdbuQGpPq5Nb5kCSFHmjXpQG-10BuehkQp7ze6fWo2rsDYZqyUXaNNiL2sCQ9smhTEPp_duL3NDqHJR7MVxA3rdyhwZp2R0f-sfljDIcEUsvxlKwP9ao68ZMMu0cORbdJkriq8I4ThZ", slots:["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"], busySlots:["08:00","09:00"], amenities:["Душевые","Раздевалки","Кафе","Ракетки"], reviews:[{name:"Айгерим Н.",stars:5,text:"Лучшие корты в городе!"}] },
+  { id:4, name:"Yoga Studio", address:"мкр Самал-2, 58, Алматы", sport:"yoga", sportLabel:"Йога, Фитнес", price:8000, rating:4.7, status:"Свободно", desc:"Просторный зал для йоги и фитнеса. Маты в аренду.", img:"https://lh3.googleusercontent.com/aida-public/AB6AXuANuZDNbfKHns7TijXPG7SHvv6Vm_a_IxpxPj-_yXIAE2RMujK0CH2u6kuEG9MNKIaKCLvGh_YA0_UZDQEkChV5z-M_E1-US9rTGta1s4PcFKSIgaa57BufOt-TSKQl0IgOFGCe1ga-WC3QJmXvjvav_yqIILkm3VhuJyZ9vMoykIV9jQtzY4k54rI8wQ73812PL4DhGwBXyiRB8u1VRjTkPmkWhaU91l4whvp_k2uV00rUwHJcM-b8uQUPaBPQne2xpfybt1e9PtN2", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Маты","Медитация"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
 ];
- 
+
 var currentUser = null;
 var selectedVenue = null;
 var selectedSlot = null;
 var bookingData = null;
- 
+
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -340,19 +371,19 @@ function showPage(name) {
   if (name == 'home') renderCards(venues);
   window.scrollTo(0, 0);
 }
- 
+
 function updateNavbar() {
   var cu = window.currentUser || currentUser;
   var area = document.getElementById('nav-user-area');
   if (cu) {
-    area.innerHTML = '<a href="#" onclick="showPage(\'profile\')" style="margin-left:15px; font-weight:bold;">👤 ' + cu.name.split(' ')[0] + '</a>' +
-      '<a href="#" onclick="doLogout()" style="margin-left:10px; color:#ffaaaa;">Выйти</a>';
+    area.innerHTML = '<a href="#" onclick="showPage(\'profile\')" style="margin-left:8px; font-weight:bold;">👤 ' + cu.name.split(' ')[0] + '</a>' +
+      '<a href="#" onclick="doLogout()" style="margin-left:6px; color:#ffaaaa;">Выйти</a>';
   } else {
-    area.innerHTML = '<a href="#" onclick="showPage(\'login\')" style="margin-left:15px;">Войти</a>' +
-      '<a href="#" onclick="showPage(\'login\')" style="margin-left:10px; background:white; color:#003399; padding:6px 14px; border-radius:8px; font-weight:bold;">Регистрация</a>';
+    area.innerHTML = '<a href="#" onclick="showPage(\'login\')" style="margin-left:8px;">Войти</a>' +
+      '<a href="#" onclick="showPage(\'login\')" style="margin-left:6px; background:white; color:#003399; padding:6px 12px; border-radius:8px; font-weight:bold;">Регистрация</a>';
   }
 }
- 
+
 function renderCards(list) {
   var container = document.getElementById('cardsContainer');
   var noRes = document.getElementById('noResults');
@@ -364,17 +395,17 @@ function renderCards(list) {
     html += '<div class="card" onclick="openVenue(' + v.id + ')">';
     html += '<img src="' + v.img + '" alt="' + v.name + '">';
     html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">';
-    html += '<h3 style="font-size:17px; font-weight:bold; margin:0;">' + v.name + '</h3>';
-    html += '<span style="color:#003399; font-weight:bold;">' + stars + ' ' + v.rating + '</span></div>';
+    html += '<h3 style="font-size:16px; font-weight:bold; margin:0;">' + v.name + '</h3>';
+    html += '<span style="color:#003399; font-weight:bold; white-space:nowrap; margin-left:8px;">' + stars + ' ' + v.rating + '</span></div>';
     html += '<p style="color:#666; font-size:13px; margin-bottom:8px;">📍 ' + v.address + '</p>';
     html += '<span style="background:#eee; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600;">' + v.sportLabel + '</span>';
-    html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; padding-top:12px; border-top:1px solid #eee;">';
-    html += '<span style="font-size:18px; font-weight:bold;">' + v.price.toLocaleString() + ' ₸<span style="font-size:12px; color:#666; font-weight:normal;">/час</span></span>';
+    html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px solid #eee;">';
+    html += '<span style="font-size:17px; font-weight:bold;">' + v.price.toLocaleString() + ' ₸<span style="font-size:12px; color:#666; font-weight:normal;">/час</span></span>';
     html += '<button class="btn btn-green" onclick="event.stopPropagation(); openVenue(' + v.id + ')">Забронировать</button></div></div>';
   });
   container.innerHTML = html;
 }
- 
+
 function doFilter() {
   var text = document.getElementById('searchText').value.toLowerCase();
   var sport = document.getElementById('filterSport').value;
@@ -390,43 +421,44 @@ function doFilter() {
   });
   renderCards(filtered);
 }
- 
+
 function openVenue(id) {
   selectedVenue = venues.find(v => v.id == id);
   selectedSlot = null;
   showPage('venue');
 }
- 
+
 function renderVenuePage() {
   var v = selectedVenue;
+  var isMobile = window.innerWidth <= 640;
   var html = '<div>';
-  html += '<img src="' + v.img + '" style="width:100%; height:300px; object-fit:cover; border-radius:12px; margin-bottom:20px;">';
+  html += '<img src="' + v.img + '" style="width:100%; height:' + (isMobile ? '220px' : '300px') + '; object-fit:cover; border-radius:12px; margin-bottom:18px;">';
   html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">';
-  html += '<h1 style="font-size:26px; font-weight:bold;">' + v.name + '</h1>';
-  html += '<span style="background:#eee; padding:6px 14px; border-radius:20px; font-weight:bold;">★ ' + v.rating + '</span></div>';
-  html += '<p style="color:#666; margin-bottom:15px;">📍 ' + v.address + '</p>';
-  html += '<p style="color:#555; margin-bottom:20px; line-height:1.6;">' + v.desc + '</p>';
-  html += '<div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">';
-  html += '<h3 style="font-weight:bold; margin-bottom:15px;">Удобства</h3><div style="display:flex; gap:15px; flex-wrap:wrap;">';
-  v.amenities.forEach(a => { html += '<span style="background:#f0f0f0; padding:8px 14px; border-radius:8px; font-size:13px;">✓ ' + a + '</span>'; });
+  html += '<h1 style="font-size:22px; font-weight:bold;">' + v.name + '</h1>';
+  html += '<span style="background:#eee; padding:5px 12px; border-radius:20px; font-weight:bold; white-space:nowrap; margin-left:10px;">★ ' + v.rating + '</span></div>';
+  html += '<p style="color:#666; margin-bottom:14px;">📍 ' + v.address + '</p>';
+  html += '<p style="color:#555; margin-bottom:18px; line-height:1.6;">' + v.desc + '</p>';
+  html += '<div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:18px;">';
+  html += '<h3 style="font-weight:bold; margin-bottom:14px;">Удобства</h3><div style="display:flex; gap:10px; flex-wrap:wrap;">';
+  v.amenities.forEach(a => { html += '<span style="background:#f0f0f0; padding:7px 13px; border-radius:8px; font-size:13px;">✓ ' + a + '</span>'; });
   html += '</div></div>';
-  html += '<div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
-  html += '<h3 style="font-weight:bold; margin-bottom:15px;">Отзывы</h3>';
+  html += '<div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+  html += '<h3 style="font-weight:bold; margin-bottom:14px;">Отзывы</h3>';
   v.reviews.forEach(function(r) {
-    html += '<div style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #eee;">';
+    html += '<div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid #eee;">';
     html += '<div style="display:flex; align-items:center; gap:10px; margin-bottom:5px;">';
-    html += '<div style="width:36px; height:36px; border-radius:50%; background:#003399; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold;">' + r.name.charAt(0) + '</div>';
+    html += '<div style="width:34px; height:34px; border-radius:50%; background:#003399; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold;">' + r.name.charAt(0) + '</div>';
     html += '<span style="font-weight:600;">' + r.name + '</span><span style="color:#003399;">' + '★'.repeat(r.stars) + '</span></div>';
     html += '<p style="color:#555; font-size:14px; margin:0;">' + r.text + '</p></div>';
   });
   html += '</div></div>';
- 
-  // правая колонка
-  html += '<div><div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); position:sticky; top:80px;">';
-  html += '<p style="font-size:24px; font-weight:bold; margin-bottom:3px;">' + v.price.toLocaleString() + ' ₸<span style="font-size:14px; font-weight:normal; color:#666;"> / час</span></p>';
-  html += '<div style="margin:15px 0;"><label>Дата</label><input type="date" id="bookDate" value="' + new Date().toISOString().split('T')[0] + '" style="margin-top:5px;"></div>';
+
+  // блок бронирования
+  html += '<div><div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); position:' + (isMobile ? 'static' : 'sticky') + '; top:80px;">';
+  html += '<p style="font-size:22px; font-weight:bold; margin-bottom:3px;">' + v.price.toLocaleString() + ' ₸<span style="font-size:14px; font-weight:normal; color:#666;"> / час</span></p>';
+  html += '<div style="margin:14px 0;"><label>Дата</label><input type="date" id="bookDate" value="' + new Date().toISOString().split('T')[0] + '" style="margin-top:5px;"></div>';
   html += '<p style="font-size:14px; font-weight:600; margin-bottom:10px;">Выберите время:</p>';
-  html += '<div id="slotsArea" style="margin-bottom:15px;">';
+  html += '<div id="slotsArea" style="margin-bottom:14px;">';
   v.slots.forEach(function(slot) {
     var busy = v.busySlots.indexOf(slot) !== -1;
     if (busy) {
@@ -439,17 +471,17 @@ function renderVenuePage() {
   html += '<button class="btn btn-green" onclick="goCheckout()" style="width:100%; padding:12px; font-size:15px; font-weight:bold;">Забронировать</button>';
   html += '<p style="text-align:center; font-size:12px; color:#666; margin-top:10px;">Бесплатная отмена за 24 часа</p>';
   html += '</div></div>';
- 
+
   document.getElementById('venueContent').innerHTML = html;
 }
- 
+
 function pickSlot(slot) {
   document.querySelectorAll('.slot:not(.busy)').forEach(s => s.classList.remove('selected'));
   var el = document.getElementById('slot-' + slot.replace(':',''));
   if (el) el.classList.add('selected');
   selectedSlot = slot;
 }
- 
+
 function goCheckout() {
   var cu = window.currentUser || currentUser;
   if (!cu) { showAlert('Войдите чтобы забронировать!'); showPage('login'); return; }
@@ -458,7 +490,7 @@ function goCheckout() {
   bookingData = { venue: selectedVenue, slot: selectedSlot, date: date };
   showPage('checkout');
 }
- 
+
 function renderCheckout() {
   var v = bookingData.venue;
   var slot = bookingData.slot;
@@ -468,49 +500,47 @@ function renderCheckout() {
   var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
   var nextHour = (parseInt(slot) + 1) + ':00';
   var total = v.price + 500;
- 
+
   var html = '<div>';
-  html += '<div style="background:white; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">';
-  html += '<h3 style="font-weight:bold; margin-bottom:15px; font-size:17px;">💳 Способ оплаты</h3>';
-  html += '<div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">';
+  html += '<div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:18px;">';
+  html += '<h3 style="font-weight:bold; margin-bottom:14px; font-size:16px;">💳 Способ оплаты</h3>';
+  html += '<div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">';
   html += '<label style="display:flex; align-items:center; gap:12px; padding:12px; border:2px solid #003399; background:#f0f4ff; border-radius:8px; cursor:pointer; font-weight:normal;"><input type="radio" name="payType" value="card" checked> <div><div style="font-weight:600; font-size:14px;">Банковская карта</div><div style="font-size:12px; color:#666;">Visa, Mastercard, Мир</div></div></label>';
   html += '<label style="display:flex; align-items:center; gap:12px; padding:12px; border:1px solid #ddd; background:white; border-radius:8px; cursor:pointer; font-weight:normal;"><input type="radio" name="payType" value="kaspi"> <div><div style="font-weight:600; font-size:14px;">Kaspi Pay / QR</div><div style="font-size:12px; color:#666;">Оплата по QR-коду</div></div></label>';
   html += '</div>';
   html += '<div style="margin-bottom:12px;"><label>Номер карты</label><input type="text" placeholder="0000 0000 0000 0000"></div>';
   html += '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;"><div><label>Срок действия</label><input type="text" placeholder="ММ/ГГ"></div><div><label>CVV</label><input type="password" placeholder="•••" maxlength="3"></div></div>';
   html += '<div><label>Имя на карте</label><input type="text" placeholder="IVAN IVANOV" style="text-transform:uppercase;"></div>';
-  html += '<p style="font-size:12px; color:#666; background:#f5f5f5; padding:10px; border-radius:8px; margin-top:10px;">🔒 Ваши данные зашифрованы</p>';
-  html += '</div>';
-  html += '<div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+  html += '<p style="font-size:12px; color:#666; background:#f5f5f5; padding:10px; border-radius:8px; margin-top:10px;">🔒 Ваши данные зашифрованы</p></div>';
+  html += '<div style="background:white; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
   html += '<label>Промокод</label><div style="display:flex; gap:10px; margin-top:6px;">';
   html += '<input type="text" id="promoCode" placeholder="Введите код" style="flex:1; margin-top:0;">';
   html += '<button class="btn" onclick="applyPromo()">Применить</button></div>';
   html += '<p id="promoMsg" style="display:none; font-size:13px; margin-top:8px;"></p></div></div>';
- 
-  // правая часть
-  html += '<div><div style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08); position:sticky; top:80px;">';
-  html += '<div style="height:110px; background:url(' + v.img + ') center/cover; position:relative;">';
+
+  html += '<div><div style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+  html += '<div style="height:100px; background:url(' + v.img + ') center/cover; position:relative;">';
   html += '<div style="position:absolute; inset:0; background:linear-gradient(to top, white, transparent);"></div></div>';
-  html += '<div style="padding:20px;">';
-  html += '<h3 style="font-weight:bold; font-size:17px; margin-bottom:18px;">Детали бронирования</h3>';
-  html += '<div style="display:flex; flex-direction:column; gap:12px; margin-bottom:15px;">';
-  html += '<div style="display:flex; gap:12px; align-items:center;"><span style="font-size:20px;">🏟</span><div><div style="font-weight:600; font-size:14px;">' + v.name + '</div><div style="font-size:12px; color:#666;">' + v.sportLabel + '</div></div></div>';
-  html += '<div style="display:flex; gap:12px; align-items:center;"><span style="font-size:20px;">📅</span><div><div style="font-weight:600; font-size:14px;">' + dateStr + '</div></div></div>';
-  html += '<div style="display:flex; gap:12px; align-items:center;"><span style="font-size:20px;">🕐</span><div><div style="font-weight:600; font-size:14px;">' + slot + ' — ' + nextHour + '</div><div style="font-size:12px; color:#666;">1 час</div></div></div>';
-  html += '</div><hr style="border:none; border-top:1px solid #eee; margin:15px 0;">';
+  html += '<div style="padding:18px;">';
+  html += '<h3 style="font-weight:bold; font-size:16px; margin-bottom:16px;">Детали бронирования</h3>';
+  html += '<div style="display:flex; flex-direction:column; gap:12px; margin-bottom:14px;">';
+  html += '<div style="display:flex; gap:10px; align-items:center;"><span style="font-size:20px;">🏟</span><div><div style="font-weight:600; font-size:14px;">' + v.name + '</div><div style="font-size:12px; color:#666;">' + v.sportLabel + '</div></div></div>';
+  html += '<div style="display:flex; gap:10px; align-items:center;"><span style="font-size:20px;">📅</span><div><div style="font-weight:600; font-size:14px;">' + dateStr + '</div></div></div>';
+  html += '<div style="display:flex; gap:10px; align-items:center;"><span style="font-size:20px;">🕐</span><div><div style="font-weight:600; font-size:14px;">' + slot + ' — ' + nextHour + '</div><div style="font-size:12px; color:#666;">1 час</div></div></div>';
+  html += '</div><hr style="border:none; border-top:1px solid #eee; margin:14px 0;">';
   html += '<div style="display:flex; justify-content:space-between; font-size:14px; color:#666; margin-bottom:8px;"><span>Аренда (1 ч.)</span><span>' + v.price.toLocaleString() + ' ₸</span></div>';
-  html += '<div style="display:flex; justify-content:space-between; font-size:14px; color:#666; margin-bottom:15px;"><span>Сервисный сбор</span><span>500 ₸</span></div>';
-  html += '<div style="display:flex; justify-content:space-between; background:#f5f7ff; padding:14px; border-radius:8px; margin-bottom:18px;">';
-  html += '<span style="font-weight:bold;">Итого</span><span style="font-weight:bold; font-size:20px; color:#003399;">' + total.toLocaleString() + ' ₸</span></div>';
+  html += '<div style="display:flex; justify-content:space-between; font-size:14px; color:#666; margin-bottom:14px;"><span>Сервисный сбор</span><span>500 ₸</span></div>';
+  html += '<div style="display:flex; justify-content:space-between; background:#f5f7ff; padding:12px; border-radius:8px; margin-bottom:16px;">';
+  html += '<span style="font-weight:bold;">Итого</span><span style="font-weight:bold; font-size:18px; color:#003399;">' + total.toLocaleString() + ' ₸</span></div>';
   html += '<button class="btn btn-green" id="payBtn" onclick="confirmPay()" style="width:100%; padding:13px; font-size:15px; font-weight:bold;">Оплатить ' + total.toLocaleString() + ' ₸ →</button>';
   html += '<p style="text-align:center; font-size:11px; color:#999; margin-top:10px;">Нажимая, вы соглашаетесь с правилами отмены</p>';
   html += '</div></div></div>';
- 
+
   document.getElementById('checkoutContent').innerHTML = html;
   document.getElementById('successScreen').style.display = 'none';
   document.getElementById('checkoutContent').style.display = 'grid';
 }
- 
+
 function applyPromo() {
   var code = document.getElementById('promoCode').value.toUpperCase().trim();
   var msg = document.getElementById('promoMsg');
@@ -523,12 +553,11 @@ function applyPromo() {
     msg.style.color = 'red'; msg.style.display = 'block';
   }
 }
- 
+
 async function confirmPay() {
   var btn = document.getElementById('payBtn');
   btn.textContent = '⏳ Обрабатываем...';
   btn.disabled = true;
- 
   try {
     var cu = window.currentUser;
     var db = window.firebaseDb;
@@ -538,26 +567,14 @@ async function confirmPay() {
     var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     var nextHour = (parseInt(bookingData.slot) + 1) + ':00';
     var num = 'SB-' + Math.floor(Math.random() * 9000 + 1000);
- 
-    // сохраняю в Firestore
     await funcs.addDoc(funcs.collection(db, 'bookings'), {
-      id: num,
-      userId: cu.uid,
-      userEmail: cu.email,
-      venueId: bookingData.venue.id,
-      venueName: bookingData.venue.name,
-      venueImg: bookingData.venue.img,
-      sportLabel: bookingData.venue.sportLabel,
-      date: bookingData.date,
-      dateStr: dateStr,
-      slot: bookingData.slot,
-      nextHour: nextHour,
-      price: bookingData.venue.price + 500,
-      status: 'confirmed',
-      createdAt: new Date().toISOString()
+      id: num, userId: cu.uid, userEmail: cu.email,
+      venueId: bookingData.venue.id, venueName: bookingData.venue.name,
+      venueImg: bookingData.venue.img, sportLabel: bookingData.venue.sportLabel,
+      date: bookingData.date, dateStr: dateStr, slot: bookingData.slot,
+      nextHour: nextHour, price: bookingData.venue.price + 500,
+      status: 'confirmed', createdAt: new Date().toISOString()
     });
- 
-    // показываю успех
     document.getElementById('checkoutContent').style.display = 'none';
     document.getElementById('successScreen').style.display = 'block';
     document.getElementById('ticketNum').textContent = 'Заказ #' + num;
@@ -566,32 +583,26 @@ async function confirmPay() {
     document.getElementById('ticketDate').textContent = dateStr;
     document.getElementById('ticketTime').textContent = bookingData.slot + ' — ' + nextHour;
     window.scrollTo(0, 0);
-    showAlert('Бронирование сохранено в базе данных! 🎉');
+    showAlert('Бронирование сохранено! 🎉');
   } catch(e) {
-    console.error(e);
     btn.textContent = 'Ошибка! Попробуйте снова';
     btn.disabled = false;
-    showAlert('Ошибка сохранения: ' + e.message);
+    showAlert('Ошибка: ' + e.message);
   }
 }
- 
-// АВТОРИЗАЦИЯ через Firebase Auth
+
 async function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
   var err = document.getElementById('loginErr');
   try {
-    var auth = window.firebaseAuth;
-    var funcs = window.firebaseFuncs;
-    await funcs.signInWithEmailAndPassword(auth, email, pass);
+    await window.firebaseFuncs.signInWithEmailAndPassword(window.firebaseAuth, email, pass);
     err.style.display = 'none';
     showPage('home');
     showAlert('Добро пожаловать!');
-  } catch(e) {
-    err.style.display = 'block';
-  }
+  } catch(e) { err.style.display = 'block'; }
 }
- 
+
 async function doRegister() {
   var name = document.getElementById('regName').value.trim();
   var email = document.getElementById('regEmail').value.trim();
@@ -600,30 +611,23 @@ async function doRegister() {
   if (!name || !email || !pass) { err.textContent = 'Заполните все поля!'; err.style.display = 'block'; return; }
   if (pass.length < 6) { err.textContent = 'Пароль минимум 6 символов!'; err.style.display = 'block'; return; }
   try {
-    var auth = window.firebaseAuth;
-    var funcs = window.firebaseFuncs;
-    var cred = await funcs.createUserWithEmailAndPassword(auth, email, pass);
-    await funcs.updateProfile(cred.user, { displayName: name });
+    var cred = await window.firebaseFuncs.createUserWithEmailAndPassword(window.firebaseAuth, email, pass);
+    await window.firebaseFuncs.updateProfile(cred.user, { displayName: name });
     window.currentUser = { name: name, email: email, uid: cred.user.uid };
     err.style.display = 'none';
     showPage('home');
     showAlert('Аккаунт создан! Добро пожаловать, ' + name + '!');
-  } catch(e) {
-    err.textContent = e.message;
-    err.style.display = 'block';
-  }
+  } catch(e) { err.textContent = e.message; err.style.display = 'block'; }
 }
- 
+
 async function doLogout() {
-  var auth = window.firebaseAuth;
-  var funcs = window.firebaseFuncs;
-  await funcs.signOut(auth);
+  await window.firebaseFuncs.signOut(window.firebaseAuth);
   window.currentUser = null;
   updateNavbar();
   showPage('home');
   showAlert('Вы вышли из аккаунта');
 }
- 
+
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab == 'login' ? 'block' : 'none';
   document.getElementById('formReg').style.display = tab == 'reg' ? 'block' : 'none';
@@ -632,88 +636,65 @@ function switchTab(tab) {
   document.getElementById('tabReg').style.background = tab == 'reg' ? '#003399' : 'white';
   document.getElementById('tabReg').style.color = tab == 'reg' ? 'white' : '#666';
 }
- 
+
 async function renderProfile() {
   var cu = window.currentUser;
   if (!cu) { showPage('login'); return; }
   var el = document.getElementById('profileContent');
   el.innerHTML = '<p style="color:#666;">Загружаем историю... ⏳</p>';
- 
   var html = '';
   var initials = cu.name.charAt(0).toUpperCase();
-  html += '<div style="background:white; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px;">';
-  html += '<div style="width:60px; height:60px; border-radius:50%; background:#003399; color:white; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:bold;">' + initials + '</div>';
-  html += '<div style="flex:1;"><div style="font-size:20px; font-weight:bold;">' + cu.name + '</div><div style="color:#666; font-size:14px;">' + cu.email + '</div></div>';
+  html += '<div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">';
+  html += '<div style="width:56px; height:56px; border-radius:50%; background:#003399; color:white; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold;">' + initials + '</div>';
+  html += '<div style="flex:1;"><div style="font-size:18px; font-weight:bold;">' + cu.name + '</div><div style="color:#666; font-size:13px;">' + cu.email + '</div></div>';
   html += '<button class="btn" onclick="doLogout()" style="background:#cc0000;">Выйти</button></div>';
- 
   try {
-    var db = window.firebaseDb;
-    var funcs = window.firebaseFuncs;
-    // получаю бронирования из Firestore
-    var q = funcs.query(funcs.collection(db, 'bookings'), funcs.where('userId', '==', cu.uid));
-    var snap = await funcs.getDocs(q);
+    var q = window.firebaseFuncs.query(window.firebaseFuncs.collection(window.firebaseDb, 'bookings'), window.firebaseFuncs.where('userId', '==', cu.uid));
+    var snap = await window.firebaseFuncs.getDocs(q);
     var myBookings = [];
     snap.forEach(d => myBookings.push({...d.data(), docId: d.id}));
     myBookings.reverse();
- 
-    html += '<h2 style="font-size:18px; font-weight:bold; margin-bottom:15px;">История бронирований (' + myBookings.length + ')</h2>';
- 
+    html += '<h2 style="font-size:17px; font-weight:bold; margin-bottom:14px;">История бронирований (' + myBookings.length + ')</h2>';
     if (!myBookings.length) {
-      html += '<div style="background:white; border-radius:12px; padding:40px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
-      html += '<div style="font-size:50px; margin-bottom:10px;">📅</div>';
-      html += '<p style="color:#666;">У вас пока нет бронирований</p>';
-      html += '<button class="btn" onclick="showPage(\'home\')" style="margin-top:15px;">Найти площадку</button></div>';
+      html += '<div style="background:white; border-radius:12px; padding:35px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08);"><div style="font-size:50px; margin-bottom:10px;">📅</div><p style="color:#666;">У вас пока нет бронирований</p><button class="btn" onclick="showPage(\'home\')" style="margin-top:14px;">Найти площадку</button></div>';
     } else {
       myBookings.forEach(function(b) {
         var statusColor = b.status == 'confirmed' ? 'green' : 'red';
         var statusText = b.status == 'confirmed' ? 'Подтверждено' : 'Отменено';
-        html += '<div style="background:white; border-radius:12px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:15px; display:flex; gap:15px; align-items:flex-start; border-left:4px solid #003399;">';
-        html += '<img src="' + b.venueImg + '" style="width:70px; height:70px; border-radius:10px; object-fit:cover; flex-shrink:0;">';
-        html += '<div style="flex:1;">';
-        html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px;">';
-        html += '<span style="font-weight:bold; font-size:16px;">' + b.venueName + '</span>';
-        html += '<span style="font-size:12px; font-weight:600; padding:3px 10px; border-radius:10px; background:' + (b.status=='confirmed'?'#e6f9ed':'#fde8e8') + '; color:' + statusColor + ';">' + statusText + '</span></div>';
-        html += '<p style="color:#666; font-size:13px; margin-bottom:8px;">' + b.sportLabel + '</p>';
-        html += '<div style="display:flex; gap:15px; font-size:13px; color:#555; flex-wrap:wrap;">';
-        html += '<span>📅 ' + b.dateStr + '</span><span>🕐 ' + b.slot + ' — ' + b.nextHour + '</span>';
-        html += '<span style="color:#003399; font-weight:bold;">💰 ' + b.price.toLocaleString() + ' ₸</span></div></div>';
+        html += '<div style="background:white; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:14px; display:flex; gap:12px; align-items:flex-start; border-left:4px solid #003399;">';
+        html += '<img src="' + b.venueImg + '" style="width:65px; height:65px; border-radius:10px; object-fit:cover; flex-shrink:0;">';
+        html += '<div style="flex:1; min-width:0;">';
+        html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">';
+        html += '<span style="font-weight:bold; font-size:15px;">' + b.venueName + '</span>';
+        html += '<span style="font-size:11px; font-weight:600; padding:3px 8px; border-radius:10px; background:' + (b.status=='confirmed'?'#e6f9ed':'#fde8e8') + '; color:' + statusColor + '; white-space:nowrap;">' + statusText + '</span></div>';
+        html += '<p style="color:#666; font-size:12px; margin-bottom:6px;">' + b.sportLabel + '</p>';
+        html += '<div style="font-size:12px; color:#555;">📅 ' + b.dateStr + ' &nbsp; 🕐 ' + b.slot + '–' + b.nextHour + ' &nbsp; <span style="color:#003399; font-weight:bold;">💰 ' + b.price.toLocaleString() + ' ₸</span></div></div>';
         if (b.status == 'confirmed') {
-          html += '<button onclick="cancelBooking(\'' + b.docId + '\')" style="background:none; border:none; color:#cc0000; cursor:pointer; font-size:12px; font-weight:600; white-space:nowrap;">Отменить</button>';
+          html += '<button onclick="cancelBooking(\'' + b.docId + '\')" style="background:none; border:none; color:#cc0000; cursor:pointer; font-size:12px; font-weight:600; white-space:nowrap; flex-shrink:0;">Отменить</button>';
         }
         html += '</div>';
       });
     }
-  } catch(e) {
-    html += '<p style="color:red;">Ошибка загрузки: ' + e.message + '</p>';
-  }
- 
+  } catch(e) { html += '<p style="color:red;">Ошибка загрузки: ' + e.message + '</p>'; }
   el.innerHTML = html;
 }
- 
+
 async function cancelBooking(docId) {
   try {
-    var db = window.firebaseDb;
-    var funcs = window.firebaseFuncs;
-    await funcs.updateDoc(funcs.doc(db, 'bookings', docId), { status: 'cancelled' });
+    await window.firebaseFuncs.updateDoc(window.firebaseFuncs.doc(window.firebaseDb, 'bookings', docId), { status: 'cancelled' });
     showAlert('Бронирование отменено');
     renderProfile();
-  } catch(e) {
-    showAlert('Ошибка: ' + e.message);
-  }
+  } catch(e) { showAlert('Ошибка: ' + e.message); }
 }
- 
+
 function showAlert(msg) {
   var el = document.getElementById('myAlert');
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3000);
 }
- 
+
 renderCards(venues);
 </script>
 </body>
-</html>
-    
-  </body>
-  
 </html>
