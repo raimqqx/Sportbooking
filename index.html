@@ -49,15 +49,15 @@
 </style>
 </head>
 <body>
-
+ 
 <div id="loadingScreen">
   <div style="font-size:28px; font-weight:bold; color:#003399;">SportBooking.kz</div>
   <div style="color:#666; font-size:14px;">Подключаемся к базе данных...</div>
   <div style="width:40px; height:40px; border:4px solid #eee; border-top-color:#003399; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
 </div>
-
+ 
 <div id="myAlert">сообщение</div>
-
+ 
 <div class="navbar" id="navbar">
   <span class="logo" onclick="showPage('home')">SportBooking.kz</span>
   <div class="navbar-links">
@@ -70,7 +70,7 @@
     </span>
   </div>
 </div>
-
+ 
 <div class="page active" id="page-home">
   <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
     <div style="background:white; border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
@@ -100,7 +100,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
-
+ 
 <div class="page" id="page-venue">
   <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
     <button class="btn" onclick="showPage('home')" style="margin-bottom:16px;">← Назад</button>
@@ -108,7 +108,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
-
+ 
 <div class="page" id="page-checkout">
   <div style="background:#003399; padding:12px 20px; display:flex; align-items:center; gap:10px;">
     <button onclick="showPage('venue')" style="background:none; border:none; color:white; cursor:pointer; font-size:18px;">←</button>
@@ -145,7 +145,7 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="page" id="page-login">
   <div style="max-width:420px; margin:40px auto; padding:0 16px;">
     <div style="text-align:center; margin-bottom:20px;">
@@ -173,7 +173,7 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="page" id="page-profile">
   <div style="max-width:700px; margin:0 auto; padding:20px 14px;">
     <h1 style="font-size:22px; font-weight:bold; color:#003399; margin-bottom:18px;">Мой профиль</h1>
@@ -181,7 +181,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
-
+ 
 <div class="page" id="page-about">
   <div style="max-width:860px; margin:0 auto; padding:30px 16px;">
     <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:8px;">О SportBooking.kz</h1>
@@ -250,7 +250,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
-
+ 
 <div class="page" id="page-support">
   <div style="max-width:700px; margin:0 auto; padding:30px 16px;">
     <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:5px;">Поддержка</h1>
@@ -267,13 +267,13 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
-
+ 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
+ 
   const firebaseConfig = {
     apiKey: "AIzaSyCRlGcg8AHUg0NuDIy9lpW_iRGmefo_a2U",
     authDomain: "sportbookingkz.firebaseapp.com",
@@ -284,19 +284,19 @@
     appId: "1:369503935275:web:cff529a9a1f2562f62c36e",
     measurementId: "G-Q46GXWSLME"
   };
-
+ 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
+ 
   window.firebaseAuth = auth;
   window.firebaseDb = db;
   window.firebaseFuncs = {
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
     collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy, updateProfile
   };
-
+ 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       window.currentUser = { name: user.displayName || user.email.split('@')[0], email: user.email, uid: user.uid };
@@ -307,20 +307,20 @@
     document.getElementById('loadingScreen').style.display = 'none';
   });
 </script>
-
+ 
 <script>
 var venues = [
   { id:1, name:"Arena Sports Center", address:"ул. Абая, 45, Семей", sport:"basketball", sportLabel:"Баскетбол, Волейбол", price:15000, rating:4.8, status:"Свободно", desc:"Современный зал с паркетом премиум-класса и LED-освещением.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637235/stroitelstvo-basketbolnyh-stadionov-i-aren_100029_t1_xsbgro.jpg", slots:["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"], busySlots:["10:00","11:00"], amenities:["Душевые","Раздевалки","Парковка","Инвентарь"], reviews:[{name:"Алексей И.",stars:5,text:"Отличный зал, покрытие супер!"},{name:"Мария С.",stars:4,text:"Всё хорошо, только парковка маленькая."}] },
   { id:2, name:"City Football Pitch", address:"пр. Шакарима, 112, Семей", sport:"football", sportLabel:"Футбол", price:20000, rating:4.5, status:"Занято до 18:00", desc:"Открытое поле с искусственным газоном. Яркое освещение.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637291/6627541b6e835_azjn9c.jpg", slots:["09:00","10:00","11:00","12:00","13:00","14:00","18:00","19:00","20:00","21:00"], busySlots:["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"], amenities:["Душевые","Раздевалки","Парковка","Трибуны"], reviews:[{name:"Дмитрий К.",stars:5,text:"Поле в отличном состоянии!"},{name:"Санжар Б.",stars:4,text:"Освещение вечером отличное."}] },
   { id:3, name:"Olympic Tennis Club", address:"ул. Дулатова, 38, Семей", sport:"tennis", sportLabel:"Теннис", price:12000, rating:4.9, status:"Свободно", desc:"Крытые и открытые корты с покрытием хард и грунт.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637144/XXL_height_kulowv.webp", slots:["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"], busySlots:["08:00","09:00"], amenities:["Душевые","Раздевалки","Кафе","Ракетки"], reviews:[{name:"Айгерим Н.",stars:5,text:"Лучшие корты в городе!"}] },
-  { id:4, name:"Yoga Studio", address:"мкр Береговой, 22, Семей", sport:"yoga", sportLabel:"Йога, Фитнес", price:8000, rating:4.7, status:"Свободно", desc:"Просторный зал для йоги и фитнеса. Маты в аренду.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637378/2ec901c0-b665-4162-92c9-e52e5cacc613_xivxjl.jpg", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Маты","Медитация"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
+  { id:4, name:"Fitness Gym", address:"мкр Береговой, 22, Семей", sport:"yoga", sportLabel:"Gym, Fitness", price:8000, rating:4.7, status:"Свободно", desc:"Modern gym with professional equipment, free weights and cardio zone.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637378/2ec901c0-b665-4162-92c9-e52e5cacc613_xivxjl.jpg", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Тренажёры","Кардио зона"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
 ];
-
+ 
 var currentUser = null;
 var selectedVenue = null;
 var selectedSlot = null;
 var bookingData = null;
-
+ 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -332,7 +332,7 @@ function showPage(name) {
   if (name == 'home') renderCards(venues);
   window.scrollTo(0, 0);
 }
-
+ 
 function updateNavbar() {
   var cu = window.currentUser || currentUser;
   var area = document.getElementById('nav-user-area');
@@ -344,7 +344,7 @@ function updateNavbar() {
       '<a href="#" onclick="showPage(\'login\')" style="margin-left:6px; background:white; color:#003399; padding:6px 12px; border-radius:8px; font-weight:bold;">Регистрация</a>';
   }
 }
-
+ 
 function renderCards(list) {
   var container = document.getElementById('cardsContainer');
   var noRes = document.getElementById('noResults');
@@ -366,7 +366,7 @@ function renderCards(list) {
   });
   container.innerHTML = html;
 }
-
+ 
 function doFilter() {
   var text = document.getElementById('searchText').value.toLowerCase();
   var sport = document.getElementById('filterSport').value;
@@ -382,13 +382,13 @@ function doFilter() {
   });
   renderCards(filtered);
 }
-
+ 
 function openVenue(id) {
   selectedVenue = venues.find(v => v.id == id);
   selectedSlot = null;
   showPage('venue');
 }
-
+ 
 function renderVenuePage() {
   var v = selectedVenue;
   var isMobile = window.innerWidth <= 640;
@@ -432,14 +432,14 @@ function renderVenuePage() {
   html += '</div></div>';
   document.getElementById('venueContent').innerHTML = html;
 }
-
+ 
 function pickSlot(slot) {
   document.querySelectorAll('.slot:not(.busy)').forEach(s => s.classList.remove('selected'));
   var el = document.getElementById('slot-' + slot.replace(':',''));
   if (el) el.classList.add('selected');
   selectedSlot = slot;
 }
-
+ 
 function goCheckout() {
   var cu = window.currentUser || currentUser;
   if (!cu) { showAlert('Войдите чтобы забронировать!'); showPage('login'); return; }
@@ -448,7 +448,7 @@ function goCheckout() {
   bookingData = { venue: selectedVenue, slot: selectedSlot, date: date };
   showPage('checkout');
 }
-
+ 
 function renderCheckout() {
   var v = bookingData.venue;
   var slot = bookingData.slot;
@@ -495,7 +495,7 @@ function renderCheckout() {
   document.getElementById('successScreen').style.display = 'none';
   document.getElementById('checkoutContent').style.display = 'grid';
 }
-
+ 
 function applyPromo() {
   var code = document.getElementById('promoCode').value.toUpperCase().trim();
   var msg = document.getElementById('promoMsg');
@@ -508,7 +508,7 @@ function applyPromo() {
     msg.style.color = 'red'; msg.style.display = 'block';
   }
 }
-
+ 
 async function confirmPay() {
   var btn = document.getElementById('payBtn');
   btn.textContent = '⏳ Обрабатываем...';
@@ -545,7 +545,7 @@ async function confirmPay() {
     showAlert('Ошибка: ' + e.message);
   }
 }
-
+ 
 async function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
@@ -557,7 +557,7 @@ async function doLogin() {
     showAlert('Добро пожаловать!');
   } catch(e) { err.style.display = 'block'; }
 }
-
+ 
 async function doRegister() {
   var name = document.getElementById('regName').value.trim();
   var email = document.getElementById('regEmail').value.trim();
@@ -574,7 +574,7 @@ async function doRegister() {
     showAlert('Аккаунт создан! Добро пожаловать, ' + name + '!');
   } catch(e) { err.textContent = e.message; err.style.display = 'block'; }
 }
-
+ 
 async function doLogout() {
   await window.firebaseFuncs.signOut(window.firebaseAuth);
   window.currentUser = null;
@@ -582,7 +582,7 @@ async function doLogout() {
   showPage('home');
   showAlert('Вы вышли из аккаунта');
 }
-
+ 
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab == 'login' ? 'block' : 'none';
   document.getElementById('formReg').style.display = tab == 'reg' ? 'block' : 'none';
@@ -591,7 +591,7 @@ function switchTab(tab) {
   document.getElementById('tabReg').style.background = tab == 'reg' ? '#003399' : 'white';
   document.getElementById('tabReg').style.color = tab == 'reg' ? 'white' : '#666';
 }
-
+ 
 async function renderProfile() {
   var cu = window.currentUser;
   if (!cu) { showPage('login'); return; }
@@ -633,7 +633,7 @@ async function renderProfile() {
   } catch(e) { html += '<p style="color:red;">Ошибка загрузки: ' + e.message + '</p>'; }
   el.innerHTML = html;
 }
-
+ 
 async function cancelBooking(docId) {
   try {
     await window.firebaseFuncs.updateDoc(window.firebaseFuncs.doc(window.firebaseDb, 'bookings', docId), { status: 'cancelled' });
@@ -641,15 +641,16 @@ async function cancelBooking(docId) {
     renderProfile();
   } catch(e) { showAlert('Ошибка: ' + e.message); }
 }
-
+ 
 function showAlert(msg) {
   var el = document.getElementById('myAlert');
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3000);
 }
-
+ 
 renderCards(venues);
 </script>
 </body>
 </html>
+ 
