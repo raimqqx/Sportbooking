@@ -49,15 +49,15 @@
 </style>
 </head>
 <body>
- 
+
 <div id="loadingScreen">
   <div style="font-size:28px; font-weight:bold; color:#003399;">SportBooking.kz</div>
   <div style="color:#666; font-size:14px;">Подключаемся к базе данных...</div>
   <div style="width:40px; height:40px; border:4px solid #eee; border-top-color:#003399; border-radius:50%; animation:spin 0.8s linear infinite;"></div>
 </div>
- 
+
 <div id="myAlert">сообщение</div>
- 
+
 <div class="navbar" id="navbar">
   <span class="logo" onclick="showPage('home')">SportBooking.kz</span>
   <div class="navbar-links">
@@ -70,7 +70,7 @@
     </span>
   </div>
 </div>
- 
+
 <div class="page active" id="page-home">
   <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
     <div style="background:white; border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
@@ -100,7 +100,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
- 
+
 <div class="page" id="page-venue">
   <div style="max-width:1100px; margin:0 auto; padding:20px 14px;">
     <button class="btn" onclick="showPage('home')" style="margin-bottom:16px;">← Назад</button>
@@ -108,7 +108,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <div class="page" id="page-checkout">
   <div style="background:#003399; padding:12px 20px; display:flex; align-items:center; gap:10px;">
     <button onclick="showPage('venue')" style="background:none; border:none; color:white; cursor:pointer; font-size:18px;">←</button>
@@ -119,33 +119,106 @@
     <h1 style="font-size:22px; font-weight:bold; color:#003399; margin-bottom:5px;">Оформление бронирования</h1>
     <p style="color:#666; margin-bottom:20px;">Проверьте данные и оплатите</p>
     <div id="checkoutContent" class="checkout-grid" style="display:grid; grid-template-columns:1fr 340px; gap:20px;"></div>
-    <div id="successScreen" style="display:none; text-align:center; padding:40px 16px;">
-      <div style="width:80px; height:80px; background:#3fff8b; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:40px;">✓</div>
-      <h2 style="font-size:24px; color:#003399; margin-bottom:10px;">Готово! Бронирование подтверждено</h2>
-      <p style="color:#666; margin-bottom:25px;">Чек отправлен на вашу почту</p>
-      <div style="max-width:320px; margin:0 auto 25px; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-        <div style="background:#003399; color:white; padding:20px; text-align:left;">
-          <div style="font-size:12px; background:rgba(255,255,255,0.2); display:inline-block; padding:3px 10px; border-radius:5px; margin-bottom:10px;" id="ticketNum">Заказ #SB-1234</div>
-          <div style="font-size:18px; font-weight:bold;" id="ticketVenue">Арена</div>
-          <div style="font-size:13px; opacity:0.8;" id="ticketSport">Вид спорта</div>
-        </div>
-        <div style="border-top:2px dashed #eee; background:white; padding:20px;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
-            <div><div style="font-size:11px; color:#999; margin-bottom:3px;">ДАТА</div><div style="font-size:14px; font-weight:600;" id="ticketDate">-</div></div>
-            <div><div style="font-size:11px; color:#999; margin-bottom:3px;">ВРЕМЯ</div><div style="font-size:14px; font-weight:600;" id="ticketTime">-</div></div>
+    <div id="successScreen" style="display:none;">
+      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+      <style>
+        .perforated-top { mask-image: radial-gradient(circle at 10px 0, transparent 10px, white 10.5px); mask-size: 20px 100%; }
+        .perforated-bottom { mask-image: radial-gradient(circle at 10px 100%, transparent 10px, white 10.5px); mask-size: 20px 100%; }
+        .receipt-shadow { filter: drop-shadow(0 4px 24px rgba(0,0,0,0.10)); }
+      </style>
+      <div style="display:flex; justify-content:center; padding:40px 16px;">
+        <div style="width:100%; max-width:440px;">
+          <!-- Receipt -->
+          <div class="receipt-shadow" style="position:relative; background:white; border-radius:16px; overflow:visible;">
+            <div class="perforated-top" style="position:absolute; top:-8px; left:0; right:0; height:16px; background:white;"></div>
+            <div style="padding:32px 32px 28px; display:flex; flex-direction:column; align-items:center;">
+              <!-- Success icon -->
+              <div style="width:64px; height:64px; border-radius:50%; background:#3fff8b; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+                <span class="material-symbols-outlined" style="font-size:36px; color:#007237; font-variation-settings:'FILL' 1;">check_circle</span>
+              </div>
+              <h1 style="font-family:'Lexend',sans-serif; font-size:20px; font-weight:600; color:#191c1e; text-align:center; margin-bottom:6px;">Оплата прошла успешно</h1>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#77767f; text-align:center; margin-bottom:28px;">Ваше бронирование подтверждено</p>
+
+              <!-- Divider -->
+              <div style="width:100%; border-top:2px dashed #c7c5cf; margin-bottom:24px;"></div>
+
+              <!-- Order details -->
+              <div style="width:100%; display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-family:'Hanken Grotesk',sans-serif; font-size:12px; font-weight:500; color:#77767f; text-transform:uppercase; letter-spacing:0.05em;">Номер брони</span>
+                  <span style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; color:#191c1e;" id="ticketNum">#SB-0000</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-family:'Hanken Grotesk',sans-serif; font-size:12px; font-weight:500; color:#77767f; text-transform:uppercase; letter-spacing:0.05em;">Дата оплаты</span>
+                  <span style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; color:#191c1e;" id="ticketDate">-</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-family:'Hanken Grotesk',sans-serif; font-size:12px; font-weight:500; color:#77767f; text-transform:uppercase; letter-spacing:0.05em;">Метод оплаты</span>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="material-symbols-outlined" style="font-size:16px; color:#575c81;">credit_card</span>
+                    <span style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; color:#191c1e;">Банковская карта</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Venue details -->
+              <div style="width:100%; background:#eceef1; border-radius:12px; padding:16px; margin-bottom:24px;">
+                <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; color:#575c81; margin-bottom:12px;">Детали площадки</div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <span class="material-symbols-outlined" style="font-size:20px; color:#77767f;">location_on</span>
+                    <span style="font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#191c1e;" id="ticketVenue">-</span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <span class="material-symbols-outlined" style="font-size:20px; color:#77767f;">sports</span>
+                    <span style="font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#191c1e;" id="ticketSport">-</span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <span class="material-symbols-outlined" style="font-size:20px; color:#77767f;">calendar_today</span>
+                    <span style="font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#191c1e;" id="ticketDateVenue">-</span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <span class="material-symbols-outlined" style="font-size:20px; color:#77767f;">schedule</span>
+                    <span style="font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#191c1e;" id="ticketTime">-</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total -->
+              <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; padding:0 4px;">
+                <span style="font-family:'Lexend',sans-serif; font-size:20px; font-weight:600; color:#191c1e;">Итого</span>
+                <span style="font-family:'Lexend',sans-serif; font-size:20px; font-weight:600; color:#575c81;" id="ticketTotal">-</span>
+              </div>
+
+              <!-- QR -->
+              <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:8px;">
+                <div style="padding:12px; background:white; border:1px solid #e0e3e6; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                  <div style="width:128px; height:128px; display:flex; align-items:center; justify-content:center; font-size:80px; line-height:1;">▦</div>
+                </div>
+                <p style="font-family:'Hanken Grotesk',sans-serif; font-size:12px; color:#77767f; text-align:center; line-height:1.5;">Покажите этот QR-код администратору<br>для входа в зал</p>
+              </div>
+            </div>
+            <div class="perforated-bottom" style="position:absolute; bottom:-8px; left:0; right:0; height:16px; background:white;"></div>
           </div>
-          <div style="background:#f5f5f5; border-radius:10px; padding:15px; text-align:center;">
-            <div style="font-size:50px; margin-bottom:5px;">▦</div>
-            <div style="font-size:11px; color:#666;">Покажите QR на входе</div>
+
+          <!-- Buttons -->
+          <div style="margin-top:40px; display:flex; flex-direction:column; gap:14px;">
+            <button onclick="showPage('profile')" style="width:100%; background:#575c81; color:white; padding:16px; border-radius:12px; border:none; font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.05em; display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; box-shadow:0 4px 12px rgba(87,92,129,0.3); transition:all 0.15s;">
+              <span class="material-symbols-outlined" style="font-size:20px;">person</span>
+              Вернуться в личный кабинет
+            </button>
+            <button onclick="showPage('home')" style="width:100%; background:transparent; color:#575c81; padding:16px; border-radius:12px; border:2px solid #575c81; font-family:'Hanken Grotesk',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.05em; display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; transition:all 0.15s;">
+              <span class="material-symbols-outlined" style="font-size:20px;">home</span>
+              На главную
+            </button>
           </div>
         </div>
       </div>
-      <button class="btn" onclick="showPage('home')" style="margin-right:10px; margin-bottom:10px;">На главную</button>
-      <button class="btn" onclick="showPage('profile')">Мои бронирования</button>
     </div>
   </div>
 </div>
- 
+
 <div class="page" id="page-login">
   <div style="max-width:420px; margin:40px auto; padding:0 16px;">
     <div style="text-align:center; margin-bottom:20px;">
@@ -173,7 +246,7 @@
     </div>
   </div>
 </div>
- 
+
 <div class="page" id="page-profile">
   <div style="max-width:700px; margin:0 auto; padding:20px 14px;">
     <h1 style="font-size:22px; font-weight:bold; color:#003399; margin-bottom:18px;">Мой профиль</h1>
@@ -181,7 +254,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <div class="page" id="page-about">
   <div style="max-width:860px; margin:0 auto; padding:30px 16px;">
     <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:8px;">О SportBooking.kz</h1>
@@ -250,7 +323,7 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz — все права защищены</div>
 </div>
- 
+
 <div class="page" id="page-support">
   <div style="max-width:700px; margin:0 auto; padding:30px 16px;">
     <h1 style="font-size:26px; font-weight:bold; color:#003399; margin-bottom:5px;">Поддержка</h1>
@@ -267,13 +340,13 @@
   </div>
   <div class="footer">©️ 2024 SportBooking.kz</div>
 </div>
- 
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
- 
+
   const firebaseConfig = {
     apiKey: "AIzaSyCRlGcg8AHUg0NuDIy9lpW_iRGmefo_a2U",
     authDomain: "sportbookingkz.firebaseapp.com",
@@ -284,19 +357,19 @@
     appId: "1:369503935275:web:cff529a9a1f2562f62c36e",
     measurementId: "G-Q46GXWSLME"
   };
- 
+
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const db = getFirestore(app);
- 
+
   window.firebaseAuth = auth;
   window.firebaseDb = db;
   window.firebaseFuncs = {
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
     collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy, updateProfile
   };
- 
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       window.currentUser = { name: user.displayName || user.email.split('@')[0], email: user.email, uid: user.uid };
@@ -307,7 +380,7 @@
     document.getElementById('loadingScreen').style.display = 'none';
   });
 </script>
- 
+
 <script>
 var venues = [
   { id:1, name:"Arena Sports Center", address:"ул. Абая, 45, Семей", sport:"basketball", sportLabel:"Баскетбол, Волейбол", price:15000, rating:4.8, status:"Свободно", desc:"Современный зал с паркетом премиум-класса и LED-освещением.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637235/stroitelstvo-basketbolnyh-stadionov-i-aren_100029_t1_xsbgro.jpg", slots:["09:00","10:00","11:00","13:00","14:00","15:00","17:00","18:00","19:00","20:00"], busySlots:["10:00","11:00"], amenities:["Душевые","Раздевалки","Парковка","Инвентарь"], reviews:[{name:"Алексей И.",stars:5,text:"Отличный зал, покрытие супер!"},{name:"Мария С.",stars:4,text:"Всё хорошо, только парковка маленькая."}] },
@@ -315,12 +388,12 @@ var venues = [
   { id:3, name:"Olympic Tennis Club", address:"ул. Дулатова, 38, Семей", sport:"tennis", sportLabel:"Теннис", price:12000, rating:4.9, status:"Свободно", desc:"Крытые и открытые корты с покрытием хард и грунт.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637144/XXL_height_kulowv.webp", slots:["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"], busySlots:["08:00","09:00"], amenities:["Душевые","Раздевалки","Кафе","Ракетки"], reviews:[{name:"Айгерим Н.",stars:5,text:"Лучшие корты в городе!"}] },
   { id:4, name:"Fitness Gym", address:"мкр Береговой, 22, Семей", sport:"yoga", sportLabel:"Gym, Fitness", price:8000, rating:4.7, status:"Свободно", desc:"Modern gym with professional equipment, free weights and cardio zone.", img:"https://res.cloudinary.com/dlqrloyd1/image/upload/w_800,h_500,c_fill/v1779637378/2ec901c0-b665-4162-92c9-e52e5cacc613_xivxjl.jpg", slots:["07:00","08:00","09:00","10:00","11:00","17:00","18:00","19:00","20:00"], busySlots:["07:00","08:00"], amenities:["Душевые","Раздевалки","Тренажёры","Кардио зона"], reviews:[{name:"Камила Д.",stars:5,text:"Очень уютный зал!"}] }
 ];
- 
+
 var currentUser = null;
 var selectedVenue = null;
 var selectedSlot = null;
 var bookingData = null;
- 
+
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -332,7 +405,7 @@ function showPage(name) {
   if (name == 'home') renderCards(venues);
   window.scrollTo(0, 0);
 }
- 
+
 function updateNavbar() {
   var cu = window.currentUser || currentUser;
   var area = document.getElementById('nav-user-area');
@@ -344,7 +417,7 @@ function updateNavbar() {
       '<a href="#" onclick="showPage(\'login\')" style="margin-left:6px; background:white; color:#003399; padding:6px 12px; border-radius:8px; font-weight:bold;">Регистрация</a>';
   }
 }
- 
+
 function renderCards(list) {
   var container = document.getElementById('cardsContainer');
   var noRes = document.getElementById('noResults');
@@ -366,7 +439,7 @@ function renderCards(list) {
   });
   container.innerHTML = html;
 }
- 
+
 function doFilter() {
   var text = document.getElementById('searchText').value.toLowerCase();
   var sport = document.getElementById('filterSport').value;
@@ -382,13 +455,13 @@ function doFilter() {
   });
   renderCards(filtered);
 }
- 
+
 function openVenue(id) {
   selectedVenue = venues.find(v => v.id == id);
   selectedSlot = null;
   showPage('venue');
 }
- 
+
 function renderVenuePage() {
   var v = selectedVenue;
   var isMobile = window.innerWidth <= 640;
@@ -432,14 +505,14 @@ function renderVenuePage() {
   html += '</div></div>';
   document.getElementById('venueContent').innerHTML = html;
 }
- 
+
 function pickSlot(slot) {
   document.querySelectorAll('.slot:not(.busy)').forEach(s => s.classList.remove('selected'));
   var el = document.getElementById('slot-' + slot.replace(':',''));
   if (el) el.classList.add('selected');
   selectedSlot = slot;
 }
- 
+
 function goCheckout() {
   var cu = window.currentUser || currentUser;
   if (!cu) { showAlert('Войдите чтобы забронировать!'); showPage('login'); return; }
@@ -448,7 +521,7 @@ function goCheckout() {
   bookingData = { venue: selectedVenue, slot: selectedSlot, date: date };
   showPage('checkout');
 }
- 
+
 function renderCheckout() {
   var v = bookingData.venue;
   var slot = bookingData.slot;
@@ -495,7 +568,7 @@ function renderCheckout() {
   document.getElementById('successScreen').style.display = 'none';
   document.getElementById('checkoutContent').style.display = 'grid';
 }
- 
+
 function applyPromo() {
   var code = document.getElementById('promoCode').value.toUpperCase().trim();
   var msg = document.getElementById('promoMsg');
@@ -508,20 +581,31 @@ function applyPromo() {
     msg.style.color = 'red'; msg.style.display = 'block';
   }
 }
- 
+
 async function confirmPay() {
-  var btn = document.getElementById('payBtn');
-  btn.textContent = '⏳ Обрабатываем...';
-  btn.disabled = true;
+  var cu = window.currentUser;
+  var d = new Date(bookingData.date);
+  var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  var nextHour = (parseInt(bookingData.slot) + 1) + ':00';
+  var num = 'SB-' + Math.floor(Math.random() * 9000 + 1000);
+
+  // Сразу показываем чек
+  document.getElementById('checkoutContent').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+  document.getElementById('ticketNum').textContent = '#' + num;
+  document.getElementById('ticketVenue').textContent = bookingData.venue.name;
+  document.getElementById('ticketSport').textContent = bookingData.venue.sportLabel;
+  document.getElementById('ticketDate').textContent = dateStr;
+  document.getElementById('ticketDateVenue').textContent = dateStr;
+  document.getElementById('ticketTime').textContent = bookingData.slot + ' — ' + nextHour;
+  document.getElementById('ticketTotal').textContent = (bookingData.venue.price + 500).toLocaleString() + ' ₸';
+  window.scrollTo(0, 0);
+
+  // Сохраняем в Firebase в фоне
   try {
-    var cu = window.currentUser;
     var db = window.firebaseDb;
     var funcs = window.firebaseFuncs;
-    var d = new Date(bookingData.date);
-    var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-    var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    var nextHour = (parseInt(bookingData.slot) + 1) + ':00';
-    var num = 'SB-' + Math.floor(Math.random() * 9000 + 1000);
     await funcs.addDoc(funcs.collection(db, 'bookings'), {
       id: num, userId: cu.uid, userEmail: cu.email,
       venueId: bookingData.venue.id, venueName: bookingData.venue.name,
@@ -530,22 +614,11 @@ async function confirmPay() {
       nextHour: nextHour, price: bookingData.venue.price + 500,
       status: 'confirmed', createdAt: new Date().toISOString()
     });
-    document.getElementById('checkoutContent').style.display = 'none';
-    document.getElementById('successScreen').style.display = 'block';
-    document.getElementById('ticketNum').textContent = 'Заказ #' + num;
-    document.getElementById('ticketVenue').textContent = bookingData.venue.name;
-    document.getElementById('ticketSport').textContent = bookingData.venue.sportLabel;
-    document.getElementById('ticketDate').textContent = dateStr;
-    document.getElementById('ticketTime').textContent = bookingData.slot + ' — ' + nextHour;
-    window.scrollTo(0, 0);
-    showAlert('Бронирование сохранено! 🎉');
   } catch(e) {
-    btn.textContent = 'Ошибка! Попробуйте снова';
-    btn.disabled = false;
-    showAlert('Ошибка: ' + e.message);
+    console.log('Firebase error:', e.message);
   }
 }
- 
+
 async function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
@@ -557,7 +630,7 @@ async function doLogin() {
     showAlert('Добро пожаловать!');
   } catch(e) { err.style.display = 'block'; }
 }
- 
+
 async function doRegister() {
   var name = document.getElementById('regName').value.trim();
   var email = document.getElementById('regEmail').value.trim();
@@ -574,7 +647,7 @@ async function doRegister() {
     showAlert('Аккаунт создан! Добро пожаловать, ' + name + '!');
   } catch(e) { err.textContent = e.message; err.style.display = 'block'; }
 }
- 
+
 async function doLogout() {
   await window.firebaseFuncs.signOut(window.firebaseAuth);
   window.currentUser = null;
@@ -582,7 +655,7 @@ async function doLogout() {
   showPage('home');
   showAlert('Вы вышли из аккаунта');
 }
- 
+
 function switchTab(tab) {
   document.getElementById('formLogin').style.display = tab == 'login' ? 'block' : 'none';
   document.getElementById('formReg').style.display = tab == 'reg' ? 'block' : 'none';
@@ -591,7 +664,7 @@ function switchTab(tab) {
   document.getElementById('tabReg').style.background = tab == 'reg' ? '#003399' : 'white';
   document.getElementById('tabReg').style.color = tab == 'reg' ? 'white' : '#666';
 }
- 
+
 async function renderProfile() {
   var cu = window.currentUser;
   if (!cu) { showPage('login'); return; }
@@ -633,7 +706,7 @@ async function renderProfile() {
   } catch(e) { html += '<p style="color:red;">Ошибка загрузки: ' + e.message + '</p>'; }
   el.innerHTML = html;
 }
- 
+
 async function cancelBooking(docId) {
   try {
     await window.firebaseFuncs.updateDoc(window.firebaseFuncs.doc(window.firebaseDb, 'bookings', docId), { status: 'cancelled' });
@@ -641,16 +714,15 @@ async function cancelBooking(docId) {
     renderProfile();
   } catch(e) { showAlert('Ошибка: ' + e.message); }
 }
- 
+
 function showAlert(msg) {
   var el = document.getElementById('myAlert');
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3000);
 }
- 
+
 renderCards(venues);
 </script>
 </body>
 </html>
- 
